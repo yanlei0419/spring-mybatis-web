@@ -13,6 +13,4 @@
     
       
     <!-- serviceClass:要访问的接口，address:接口地址 -->  
-    <jaxws:client id="dataStandardCxfClient" serviceClass="com.zx.datastandard.cxf.DataStandardWebService"  
-        address="http://localhost:8080/datastandard/cxf/dataStandardWebService?wsdl" />  
-</beans> 
+</beans>
