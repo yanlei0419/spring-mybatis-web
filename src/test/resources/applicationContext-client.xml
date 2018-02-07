@@ -9,8 +9,10 @@
     http://cxf.apache.org/jaxws  
     http://cxf.apache.org/schemas/jaxws.xsd
     ">  
-      
+
     
       
     <!-- serviceClass:要访问的接口，address:接口地址 -->  
+    <!-- serviceClass:要访问的接口，address:接口地址 -->
+    <!-- serviceClass:要访问的接口，address:接口地址 -->
 </beans>
