@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p" xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:websocket="http://www.springframework.org/schema/websocket" xsi:schemaLocation="  
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    http://cxf.apache.org/jaxws
+    http://cxf.apache.org/schemas/jaxws.xsd
+    ">
+	<context:property-placeholder location="classpath:properties/initConfig.properties" />
+	<!-- 添加注解驱动 -->
+<!-- 	<mvc:annotation-driven> -->
+<!-- 		<mvc:message-converters> -->
+<!-- 			<bean class="org.springframework.http.converter.StringHttpMessageConverter" /> -->
+<!-- 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" /> -->
+<!-- 		</mvc:message-converters> -->
+<!-- 	</mvc:annotation-driven> -->
+<!-- 	<context:annotation-config />   -->
+
+<!-- 	<bean id="requestMappingHandlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" /> -->
+
+	<!-- 避免IE在ajax请求时，返回json出现下载 <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> <property name="supportedMediaTypes"> <list> <value>text/html;charset=UTF-8</value> </list> </property> </bean> -->
+
+	<!-- 配置国际化拦截器 -->
+	<!-- 拦截参数 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:/messages/messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="lang" />
+	</bean>
+	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+
+	<!-- 对模型视图添加前后缀 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="1" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 配置MultipartResolver 用于文件上传 使用spring的CommosMultipartResolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxUploadSize" value="-1" />
+		<!-- <property name="uploadTempDir" value="${upload}" /> -->
+	</bean>
+
+</beans>    

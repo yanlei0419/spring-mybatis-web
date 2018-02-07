@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<b:beans 	xmlns="http://www.springframework.org/schema/security" 
+				xmlns:b="http://www.springframework.org/schema/beans" 
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+				xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security 
+						http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<http pattern="/login.jsp*" security="none" />
+	<http pattern="/login/loginout.do*" security="none" />
+	<http pattern="/jsp/dic/**" security="none" />
+	<!-- 数据标准列表查询方法 -->
+	<http pattern="/seeker/getList.do*" security="none" />
+	<!-- 数据标准查询方法 -->
+	<http pattern="/seeker/getDetail.do*" security="none" />
+	<!-- 数据标准使用情况查询方法 -->
+	<http pattern="/seeker/getDsUseList.do*" security="none" />
+	<!-- 下载页面 -->
+	<http pattern="/jsp/include/download.jsp*" security="none" />
+	<!-- 数据标准查询列表页面 -->
+	<http pattern="/jsp/seeker/list.jsp*" security="none" />
+	<!-- <http pattern="/**/detail.jsp*" security="none" /> -->
+	<!-- <http pattern="/**/*list.jsp*" security="none" /> -->
+	<http pattern="/plugins/**" security="none" />
+	<http pattern="/error/**" security="none" />
+	<http pattern="/**/*.jpg" security="none" />
+	<http pattern="/**/*.jpeg" security="none" />
+	<http pattern="/**/*.png" security="none" />
+	<http pattern="/**/*.gif" security="none" />
+	<http pattern="/**/*.js" security="none" />
+	<http pattern="/**/*.css" security="none" />
+	<http pattern="/**/*.htc" security="none" />
+	<http pattern="/**/*.ico" security="none" />
+	<!-- <http pattern="/**/*.xml*" security="none" /> -->
+
+	<http auto-config="true" use-expressions="true" servlet-api-provision="true">
+		<intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<!-- 越具体页面放前面 -->
+		<intercept-url pattern="/jsp/sys/user/updateNewPW.jsp*" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/jsp/seeker/admin/list.jsp*" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/user/**" access=" hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/jsp/sys/**" access=" hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')" />
+		<form-login username-parameter="username" password-parameter="password" login-page="/login.jsp" login-processing-url="/login" always-use-default-target="false" default-target-url="/login/handle.do" authentication-failure-url="/login.jsp?error=true" />
+		<!-- <remember-me /> -->
+		<!-- authentication-failure-handler-ref="RestAuthenticationFailureHandler" -->
+		<!-- authentication-success-handler-ref="authenticationSuccessHandler" -->
+
+		<session-management invalid-session-url="/login.jsp" session-fixation-protection="none">
+			<!-- 同一时间内允许同一账号保持4个在线,error-if-maximum-exceeded="true"表示第第四个以后的登不进去 -->
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="false" />
+		</session-management>
+		<!-- 无权操作 跳转页面 -->
+		<access-denied-handler error-page="/error/privs.jsp" />
+
+		<csrf disabled="true" />
+		<!-- iframe 可以使用 -->
+		<headers disabled="true" />
+		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/login/loginout.do" delete-cookies="JSESSIONID" />
+		<!-- 权限拦截器 -->
+		<!-- <custom-filter ref="customSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/> -->
+	</http>
+
+	<authentication-manager>
+		<!-- <authentication-provider > -->
+		<!-- <user-service> -->
+		<!-- <user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN"/> -->
+		<!-- <user name="user" password="user" authorities="ROLE_USER" /> -->
+		<!-- </user-service> -->
+		<!-- </authentication-provider> -->
+		<authentication-provider user-service-ref="userService">
+			<password-encoder ref="le" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<!-- 定义国际化 -->
+	<b:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<b:property name="basename" value="classpath:org/springframework/security/messages_zh_CN" />
+	</b:bean>
+
+</b:beans>

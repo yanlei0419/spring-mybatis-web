@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 打印查询语句 -->
+		<!-- <setting name="logImpl" value="STDOUT_LOGGING" /> -->
+		<setting name="logImpl" value="LOG4J" />
+		<!-- 开启二级缓存默认是false,true 是开启 -->
+		<setting name="cacheEnabled" value="true" />
+	</settings>
+	<!-- 类型别名是为 Java类型命名一个短的名字。 它只和 XML配置有关,只用来减少类完全 限定名的多余部分 -->
+	<typeAliases>
+		<typeAlias alias="SysLog" 								type="com.seeker.entity.SysLog" />
+		<typeAlias alias="Menu" 									type="com.seeker.entity.Menu" />
+		<typeAlias alias="Group" 									type="com.seeker.entity.Group" />
+		<typeAlias alias="GroupMenu" 							type="com.seeker.entity.GroupMenu" />
+		<typeAlias alias="User" 									type="com.seeker.entity.User" />
+		<typeAlias alias="GroupUser" 							type="com.seeker.entity.GroupUser" />
+	</typeAliases>
+
+<!-- 	<mappers> -->
+<!-- 		<mapper resource="application/mapper/mysql/sys/SysLog.Mapper.xml" />	 -->
+<!-- 		<mapper resource="application/mapper/mysql/sys/MenuMapper.xml" />	 -->
+<!-- 		<mapper resource="application/mapper/mysql/sys/GroupMapper.xml" />	 -->
+<!-- 		<mapper resource="application/mapper/mysql/sys/GroupMenuMapper.xml" />	 -->
+<!-- 		<mapper resource="application/mapper/mysql/sys/UserMapper.xml" />	 -->
+<!-- 		<mapper resource="application/mapper/mysql/sys/GroupUserMapper.xml" />	 -->
+<!-- 	</mappers> -->
+<!-- 	<mappers> -->
+<!-- 		<mapper resource="application/mapper/sys/SysLog.Mapper.xml" />	 -->
+<!-- 		<mapper resource="application/mapper/sys/MenuMapper.xml" />	 -->
+<!-- 		<mapper resource="application/mapper/sys/GroupMapper.xml" />	 -->
+<!-- 		<mapper resource="application/mapper/sys/GroupMenuMapper.xml" />	 -->
+<!-- 		<mapper resource="application/mapper/sys/UserMapper.xml" />	 -->
+<!-- 		<mapper resource="application/mapper/sys/GroupUserMapper.xml" />	 -->
+<!-- 	</mappers> -->
+
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageHelper">
+			<property name="dialect" value="mysql" />
+			<property name="offsetAsPageNum" value="true" />
+			<property name="rowBoundsWithCount" value="true" />
+			<property name="pageSizeZero" value="true" />
+			<property name="reasonable" value="true" />
+			<property name="params" value="pageNum=start;pageSize=limit;" />
+			<property name="supportMethodsArguments" value="true" />
+			<property name="returnPageInfo" value="check" />
+		</plugin>
+	</plugins>
+
+</configuration>

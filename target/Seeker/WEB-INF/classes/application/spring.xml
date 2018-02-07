@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xmlns:p="http://www.springframework.org/schema/p" 
+			xmlns:jaxws="http://cxf.apache.org/jaxws" 
+			xmlns:context="http://www.springframework.org/schema/context" 
+			xmlns:mvc="http://www.springframework.org/schema/mvc"
+			xmlns:aop="http://www.springframework.org/schema/aop"
+			xmlns:tx="http://www.springframework.org/schema/tx"
+			xmlns:security="http://www.springframework.org/schema/security"
+			xsi:schemaLocation="http://www.springframework.org/schema/beans      
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd      
+                        http://www.springframework.org/schema/context      
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd      
+                        http://www.springframework.org/schema/mvc      
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                        http://www.springframework.org/schema/tx 
+	          			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd  
+                        http://cxf.apache.org/jaxws
+					    http://cxf.apache.org/schemas/jaxws.xsd
+					    http://www.springframework.org/schema/security 
+                        http://www.springframework.org/schema/security/spring-security.xsd
+					    ">
+	<context:annotation-config />  
+	<!-- 加载jdbc -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	<context:component-scan base-package="com.seeker.service" >
+		<!--自动装配 Repository Service Controller Component的 bean-->
+		<!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/> -->
+		<!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/> -->
+		<!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/> -->
+		<!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/> -->
+	</context:component-scan>
+	<context:component-scan base-package="com.seeker.common"  />
+
+<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> -->
+<!-- 		<property name="driverClassName" value="${jdbc.driver}" /> -->
+<!-- 		<property name="url" value="${jdbc.url}" /> -->
+<!-- 		<property name="username" value="${jdbc.username}" /> -->
+<!-- 		<property name="password" value="${jdbc.password}" /> -->
+		<!-- 初始化连接大小 -->
+<!-- 		<property name="initialSize" value="${jdbc.initialSize}"></property> -->
+		<!-- 连接池最大数量 -->
+<!-- 		<property name="maxActive" value="${jdbc.maxActive}"></property> -->
+		<!-- 连接池最大空闲 -->
+<!-- 		<property name="maxIdle" value="${jdbc.maxIdle}"></property> -->
+		<!-- 连接池最小空闲 -->
+<!-- 		<property name="minIdle" value="${jdbc.minIdle}"></property> -->
+		<!-- 获取连接最大等待时间 -->
+<!-- 		<property name="maxWait" value="${jdbc.maxWait}"></property> -->
+		<!-- 连接属性 -->
+<!-- 		<property name="connectionProperties"> -->
+<!-- 			<value>clientEncoding=UTF-8</value> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">  
+		<!--慢SQL统计，如果SQL执行时间超过一定时间则记录为慢SQL  -->
+	    <property name="slowSqlMillis" value="10000" />  
+	    <!--慢SQL统计日志输出  -->
+	    <property name="logSlowSql" value="false" />  
+	     <!--合并SQL统计 例如select * from table t where t.id =1，会被变为select * from table t where t.id =？来统计  -->	
+	    <property name="mergeSql" value="true" />
+	</bean>  
+	<bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">  
+	    <property name="statementExecutableSqlLogEnable" value="true" />  
+	    <property name="resultSetLogEnabled" value="false" />  
+	</bean>  
+<!-- 	<bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig"   init-method="init">   -->
+<!-- 	    指定配置装载的目录   -->
+<!-- 	    <property name="dir" value="META-INF/druid/wall/oracle" />   -->
+<!-- 	    <property name="truncateAllow" value="false" />   -->
+<!-- 	</bean>   -->
+	  
+<!-- 	<bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">   -->
+<!-- 	    <property name="dbType" value="mysql" />   -->
+<!-- 	    <property name="logViolation" value="true" />   -->
+<!-- 	    <property name="throwException" value="false"/>   -->
+<!-- 	    <property name="config" ref="wall-filter-config" />   -->
+<!-- 	</bean>  -->
+	
+		<!-- 基于Druid数据库链接池的数据源配置 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<!-- 基本属性driverClassName、 url、user、password -->
+		<property name="driverClassName" 						value="${jdbc.driver}" />
+		<property name="url" 												value="${jdbc.url}" />
+		<property name="username" 									value="${jdbc.username}" />
+		<property name="password" 									value="${jdbc.password}" />
+		<!-- 配置初始化大小、最小、最大 -->
+		<!-- 通常来说，只需要修改initialSize、minIdle、maxActive -->
+		<property name="initialSize" 									value="${jdbc.initialSize}" />
+		<property name="minIdle" 										value="${jdbc.minIdle}" />
+		<property name="maxActive" 									value="${jdbc.maxActive}" />
+		<property name="testWhileIdle" 								value="${jdbc.testWhileIdle}" />
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" 									value="${jdbc.maxWait}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" 			value="${jdbc.minEvictableIdleTimeMillis}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" 		value="${jdbc.timeBetweenEvictionRunsMillis}" />
+		<property name="filters" 										value="stat,log4j" />
+		<!-- 解密密码必须要配置的项 -->
+<!-- 		<property name="filters" value="config" /> -->
+		<property name="connectionProperties" 					value="config.decrypt=true" />
+<!-- 		<property name="validationQuery" 					value="select 1 from dual" /> -->
+<!-- 		<property name="connectionInitSqls" 				value="select 1  from dual" /> -->
+		
+		 <!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->  
+		    <property name="proxyFilters">  
+		        <list>  
+		            <ref bean="stat-filter" />  
+		            <ref bean="log-filter" />  
+<!-- 		            <ref bean="wall-filter" />   -->
+		        </list>  
+		    </property>  
+	</bean>
+
+	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:application/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath:application/mapper/orc/**/*Mapper.xml" />
+<!-- 		<property name="mapperLocations" > -->
+<!-- 			<list> -->
+<!-- 				<value>classpath:application/mapper/orc/**/*Mapper.xml</value> -->
+<!-- 				<value>classpath:application/mapper/orc/*Mapper.xml</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+	</bean>
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.seeker.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 事务注解驱动，标注@Transactional的类和方法将具有事务性 -->  
+	<tx:annotation-driven transaction-manager="transactionManager"  proxy-target-class="true" />  
+
+
+	<!-- 
+        使用<jaxws:clietn>调用服务端
+        jaxws:client内部使用JaxWsProxyFactoryBean方式
+        serviceClass:指定portType地址（需要使用wsdl2java工具生成） 
+    -->
+<!--     <jaxws:client id="weatherClient" address="http://localhost:8080/WebService_CXF_Spring_Server00/ws/weather?wsdl" -->
+<!--         serviceClass="com.higgin.weather.WeatherInterface"> -->
+<!--     </jaxws:client> -->
+	
+	 <!-- 注解驱动 -->
+	<mvc:annotation-driven />
+	<!-- 使Spring支持自动检测组件,自动扫描controller -->
+	<!-- 扫描controller（controller层注入） -->
+	<context:component-scan base-package="com.seeker.controller" >
+		<!-- 		只扫描Controller注解 -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+<!-- 	<import resource="security.xml"/> -->
+
+</beans>
