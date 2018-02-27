@@ -10,10 +10,13 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -27,6 +30,8 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("rawtypes")
 public class ExcelUtil {
 	private static Logger l=LoggerFactory.getLogger(ExcelUtil.class);
+	private static String pattern="YYYY-MM-dd HH:mm:ss";
+	private static SimpleDateFormat sdf=new SimpleDateFormat(pattern);
 	
 	/**
 	 * 生成excel文档对象
@@ -36,35 +41,10 @@ public class ExcelUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static Workbook outExcelNew(String[] titles, String[] fields,List list,String sheetName) throws Exception {
+	public static Workbook exportExcelNew(String[] titles, String[] fields,List list,String sheetName) throws Exception {
 		// 创建sheet对象
 		HSSFWorkbook wb =  new HSSFWorkbook();
-		Sheet sheet = (Sheet) wb.createSheet(sheetName);
-
-		Row row=null;
-		createExcelTitle(titles, wb, sheet);
-		
-		// 循环写入行数据
-		for (int i = 0; i < list.size(); i++) {
-			Object objData=list.get(i);
-			row = (Row) sheet.createRow(i + 1);
-			row.setHeight((short) 500);
-			for (int j = 0; j < fields.length; j++) {
-				Cell tempCell=row.createCell(j);
-				if("".equals(fields[j])){
-					tempCell.setCellValue(i+1);//序号
-				}else{
-					Method m=objData.getClass().getDeclaredMethod("get"+VeUtil.captureName(fields[j]));
-					Object obj=m.invoke(objData);
-					if(null!=obj){
-						tempCell.setCellValue(obj.toString());//
-					}else{
-						tempCell.setCellValue("");
-					}
-				}
-			}
-		}
-		return wb;
+		return exportSheetExcelNew(wb,titles,fields,list,sheetName);
 	}
 
 	/**
@@ -109,84 +89,82 @@ public class ExcelUtil {
 		row.setHeight((short) 540);
 	}
 	
-	/**
-	 * 生成excel文档对象
-	 * @param titles
-	 * @param fields
-	 * @param list
-	 * @return
-	 * @throws Exception
-	 */
-
-	public static Workbook outAnalysisExcelNew(String[] titles, String[] fields,List list,String sheetName) throws Exception {
-		// 创建sheet对象
-		HSSFWorkbook wb =  new HSSFWorkbook();
-		Sheet sheet = (Sheet) wb.createSheet(sheetName);
-
-		Row row=null;
-		createExcelTitle(titles, wb, sheet);
-		
-		CellStyle blue=excelHandleCell(wb, HSSFColor.PALE_BLUE.index);
-		CellStyle red=excelHandleCell(wb, HSSFColor.RED.index);
-		CellStyle yellow=excelHandleCell(wb, HSSFColor.YELLOW.index);
-		CellStyle white=excelHandleCell(wb, HSSFColor.WHITE.index);
+//	/**
+//	 * 生成excel文档对象
+//	 * @param titles
+//	 * @param fields
+//	 * @param list
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	public static Workbook outAnalysisExcelNew(String[] titles, String[] fields,List list,String sheetName) throws Exception {
+//		// 创建sheet对象
+//		HSSFWorkbook wb =  new HSSFWorkbook();
+//		Sheet sheet = (Sheet) wb.createSheet(sheetName);
+//
+//		Row row=null;
+//		createExcelTitle(titles, wb, sheet);
+//
+//		CellStyle blue=excelHandleCell(wb, HSSFColor.PALE_BLUE.index);
+//		CellStyle red=excelHandleCell(wb, HSSFColor.RED.index);
+//		CellStyle yellow=excelHandleCell(wb, HSSFColor.YELLOW.index);
+//		CellStyle white=excelHandleCell(wb, HSSFColor.WHITE.index);
 //		Object ans =null;
-		// 循环写入行数据
-		for (int i = 0; i < list.size(); i++) {
-			Object objData=list.get(i);
-			Method getRowsType=objData.getClass().getDeclaredMethod("getRowsType");;
-			Object objRowsType=getRowsType.invoke(objData);
-//			if(ans instanceof Analysis){//判断是否为Analysis 对象
-//				getRowsType=ans.getClass().getDeclaredMethod("getRowsType");
-//				objRowsType=getRowsType.invoke(ans);
+//		// 循环写入行数据
+//		for (int i = 0; i < list.size(); i++) {
+//			Object objData=list.get(i);
+//			Method getRowsType=objData.getClass().getDeclaredMethod("getRowsType");;
+//			Object objRowsType=getRowsType.invoke(objData);
+////			if(ans instanceof Analysis){//判断是否为Analysis 对象
+////				getRowsType=ans.getClass().getDeclaredMethod("getRowsType");
+////				objRowsType=getRowsType.invoke(ans);
+////			}
+//			int num=1;
+//			if(null!=objRowsType){
+//				num=Integer.valueOf(objRowsType.toString());
 //			}
-			int num=1;
-			if(null!=objRowsType){
-				num=Integer.valueOf(objRowsType.toString());
-			}
-			row = (Row) sheet.createRow(i + 1);
-			row.setHeight((short) 500);
-			for (int j = 0; j < fields.length; j++) {
-				Cell tempCell=row.createCell(j);
-				if("".equals(fields[j])){
-					tempCell.setCellValue(i+1);//序号
-				}else if("is_update".equals(fields[j])||"similarity_is_update".equals(fields[j])){
-					Method m=objData.getClass().getDeclaredMethod("get"+VeUtil.captureName(fields[j]));
-					Object obj=m.invoke(objData);
-					if("1".equals(obj.toString())){
-						tempCell.setCellValue("是");//修改
-					}else{
-						tempCell.setCellValue("否");//修改
-					}
-				}else{
-//					System.out.println("get"+captureName(fields[j]));
-					Method m=objData.getClass().getDeclaredMethod("get"+VeUtil.captureName(fields[j]));
-					Object obj=m.invoke(objData);
-					if(null!=obj){
-						tempCell.setCellValue(obj.toString());//
-					}else{
-						tempCell.setCellValue("");
-					}
-				}
-				if(num%6==2){
-					tempCell.setCellStyle(blue);
-				}else if(num%6==4){
-					tempCell.setCellStyle(red);
-				}else if(num%6==0){
-					tempCell.setCellStyle(yellow);
-				}else{
-					tempCell.setCellStyle(white);
-				}
-			}
-		}
-		return wb;
-	}
+//			row = (Row) sheet.createRow(i + 1);
+//			row.setHeight((short) 500);
+//			for (int j = 0; j < fields.length; j++) {
+//				Cell tempCell=row.createCell(j);
+//				if("".equals(fields[j])){
+//					tempCell.setCellValue(i+1);//序号
+//				}else if("is_update".equals(fields[j])||"similarity_is_update".equals(fields[j])){
+//					Method m=objData.getClass().getDeclaredMethod("get"+VeUtil.captureName(fields[j]));
+//					Object obj=m.invoke(objData);
+//					if("1".equals(obj.toString())){
+//						tempCell.setCellValue("是");//修改
+//					}else{
+//						tempCell.setCellValue("否");//修改
+//					}
+//				}else{
+////					System.out.println("get"+captureName(fields[j]));
+//					Method m=objData.getClass().getDeclaredMethod("get"+VeUtil.captureName(fields[j]));
+//					Object obj=m.invoke(objData);
+//					if(null!=obj){
+//						tempCell.setCellValue(obj.toString());//
+//					}else{
+//						tempCell.setCellValue("");
+//					}
+//				}
+//				if(num%6==2){
+//					tempCell.setCellStyle(blue);
+//				}else if(num%6==4){
+//					tempCell.setCellStyle(red);
+//				}else if(num%6==0){
+//					tempCell.setCellStyle(yellow);
+//				}else{
+//					tempCell.setCellStyle(white);
+//				}
+//			}
+//		}
+//		return wb;
+//	}
 	
 	/**
 	 * 获取行样式
 	 * @param wb
 	 * @param num
-	 * @param temp
 	 * @return
 	 */
 	private static CellStyle excelHandleCell(HSSFWorkbook wb,short num){
@@ -238,7 +216,7 @@ public class ExcelUtil {
 		if(null==list||list.size()<=0){
 			return null;
 		}
-		wb=outExcelNew(titles,fields, list,sheetName);//普通excel生成
+		wb=exportExcelNew(titles,fields, list,sheetName);//普通excel生成
 		File file=new File(path+File.separatorChar+SysConstant.DOWNLOAD+File.separatorChar+fileName+".xls");
 //		if (!file.exists()) {
 //			file.mkdirs();
@@ -249,7 +227,6 @@ public class ExcelUtil {
 		// 关闭文件流
 		stream.close();
 		return file.getPath();
-//		return file.getPath().replaceAll("\\\\", "/");
 	}
 	
 	
@@ -261,7 +238,7 @@ public class ExcelUtil {
 		}
 		if(list.get(0) instanceof List){
 			for (int i = 0; i < sheetNames.length; i++) {
-				outSheetExcelNew(wb,titles.get(i), fields.get(i), (List)list.get(i), sheetNames[i]);//生成Analysis对象excel  要求比较多 放在一起增加复杂度
+				exportSheetExcelNew(wb,titles.get(i), fields.get(i), (List)list.get(i), sheetNames[i]);//生成Analysis对象excel  要求比较多 放在一起增加复杂度
 			}
 		}
 		File file=new File(path+File.separatorChar+SysConstant.DOWNLOAD+File.separatorChar+fileName+".xls");
@@ -274,16 +251,17 @@ public class ExcelUtil {
 		// 关闭文件流
 		stream.close();
 		return file.getPath();
-//		return file.getPath().replaceAll("\\\\", "/");
 	}
 	
-	public static Workbook outSheetExcelNew(HSSFWorkbook wb,String[] titles, String[] fields,List list,String sheetName) throws Exception {
+	public static Workbook exportSheetExcelNew(HSSFWorkbook wb,String[] titles, String[] fields,List list,String sheetName) throws Exception {
 		// 创建sheet对象
-		Sheet sheet = (Sheet) wb.createSheet(sheetName);
+		HSSFSheet sheet = wb.createSheet(sheetName);
 
 		Row row=null;
 		createExcelTitle(titles, wb, sheet);
-		
+		HSSFPatriarch patriarch=sheet.createDrawingPatriarch();
+
+
 		// 循环写入行数据
 		for (int i = 0; i < list.size(); i++) {
 			Object objData=list.get(i);
@@ -295,11 +273,54 @@ public class ExcelUtil {
 					tempCell.setCellValue(i+1);//序号
 				}else{
 					Method m=objData.getClass().getDeclaredMethod("get"+VeUtil.captureName(fields[j]));
-					Object obj=m.invoke(objData);
-					if(null!=obj){
-						tempCell.setCellValue(obj.toString());//
+					Object val=m.invoke(objData);
+//					if(val==null){
+//						tempCell.setCellValue("");
+//					}else
+					if(val instanceof Integer){
+						int intVal= (Integer) val;
+						tempCell.setCellValue(intVal);//
+					}else if(val instanceof Float){
+						float intVal= (Float) val;
+						tempCell.setCellValue(intVal);//
+					}else if(val instanceof Double){
+						double intVal= (Double) val;
+						tempCell.setCellValue(intVal);//
+					}else if(val instanceof Long){
+						long intVal= (Long) val;
+						tempCell.setCellValue(intVal);//
+					}
+					String textVal=null;
+					if(val instanceof Date){
+						Date date=(Date) val;
+						textVal=sdf.format(date);
+						tempCell.setCellValue(textVal);//
+					}else if(val instanceof byte[]){//图片
+						//有图片时,设置行高为60px
+						row.setHeightInPoints(60);
+						sheet.setColumnWidth(j, (int) (35.7*80));
+						byte[] bsVal= (byte[]) val;
+						HSSFClientAnchor anchor=new HSSFClientAnchor(0,0,1023,255,(short)6,i,(short) 6,i);
+						anchor.setAnchorType(2);
+						patriarch.createPicture(anchor,wb.addPicture(bsVal,HSSFWorkbook.PICTURE_TYPE_JPEG));
 					}else{
-						tempCell.setCellValue("");
+						if(val!=null){
+							textVal=val.toString();
+						}else{
+							tempCell.setCellValue("");
+						}
+					}
+
+					if(textVal!=null){
+						Pattern p=Pattern.compile("^//d+(//.//d+)?$");
+						Matcher matcher=p.matcher(textVal);
+						if(matcher.matches()){
+							tempCell.setCellValue(Double.parseDouble(textVal));
+						}else{
+							HSSFRichTextString rts = new HSSFRichTextString(textVal);
+//							rts.applyFont();
+							tempCell.setCellValue(rts);
+						}
 					}
 				}
 			}
@@ -307,12 +328,15 @@ public class ExcelUtil {
 		return wb;
 	}
 
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+	/**
+	 *导入excel文件
+	 */
 
     
 	/**
@@ -343,6 +367,8 @@ public class ExcelUtil {
 			return null;
 		}
 	}
+
+
 	public static String getHandleCellValue(Sheet sheet, int row, int column, Row rc) {
 		if (isMergedRow(sheet, row, column)) {
 			return getMergedRegionValue(sheet, row, column).trim();
@@ -350,6 +376,8 @@ public class ExcelUtil {
 			return getCellValue(rc.getCell(column)).trim();
 		}
 	}
+
+
 	/**
 	 * 获取合并单元格的值
 	 * 
@@ -379,6 +407,8 @@ public class ExcelUtil {
 	
 
 	private static final DecimalFormat dfs = new DecimalFormat("0");//取消数字小数点
+
+
 	/**
 	 * 获取单元格的值
 	 * 
