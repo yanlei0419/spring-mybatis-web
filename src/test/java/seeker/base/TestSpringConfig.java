@@ -10,7 +10,7 @@
 //	public static ApplicationContext ctx ;
 //	static {
 //		PropertyConfigurator.configure( "D:\\Workspaces\\DataStandard\\datastandard\\src\\main\\resources\\log4j.properties" );
-//		ctx =  new AnnotationConfigApplicationContext(SpringRootConfig.class); 
+//		ctx =  new AnnotationConfigApplicationContext(SpringRootConfig.class);
 //	}
 //
 //}

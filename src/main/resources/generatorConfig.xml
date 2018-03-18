@@ -21,7 +21,7 @@
    		<property name="beginningDelimiter" value="`"/>
 		<property name="endingDelimiter" value="`"/>  
    		
-		<commentGenerator  type="config.MyCommentGenerator">
+		<commentGenerator  type="com.seeker.common.mybatis.MyCommentGenerator">
 		</commentGenerator>
 <!-- 		<commentGenerator  > -->
 			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -48,7 +48,7 @@
 		<!-- 生成模型的包名和位置 -->
 		<javaModelGenerator targetPackage="${model_targetPackage}" targetProject="${targetProject}" >
 <!-- 	        <property name="trimStrings" value="true"/> -->
-<!-- 			 <property name="rootClass" value="com.zx.datastandard.common.base.entity.Page"/> -->
+<!-- 			<property name="rootClass" value="com.zx.datastandard.common.base.entity.Page"/> -->
 		</javaModelGenerator>
 		
 		
@@ -60,7 +60,7 @@
 		<!-- 生成DAO的包名和位置 -->
 		<javaClientGenerator type="XMLMAPPER" targetPackage="${dao_targetPackage}" targetProject="${targetProject}"  >
 <!-- 			<property name="enableSubPackages" value="true" /> -->
-			<property name="rootInterface" value="org.pbccrc.devplatform.component.dao.mybatis.support.mapper.BaseMapper"/>
+<!-- 			<property name="rootInterface" value="org.pbccrc.devplatform.component.dao.mybatis.support.mapper.BaseMapper"/> -->
 		</javaClientGenerator>
 		
 		
@@ -99,14 +99,31 @@
 <!-- 			enableSelectByExample="false"  -->
 <!-- 		/> -->
 		<table 
-			tableName="RELA_SCH_STATISTICS" 
-			domainObjectName="RelaSchStatistics" 
+			tableName="T_CHECKMETADATA" 
+			domainObjectName="CheckMetadata" 
 			enableCountByExample="false" 
 			enableUpdateByExample="false" 
 			enableDeleteByExample="false" 
 			enableSelectByExample="false" 
 		/>
-
+		<table 
+			tableName="T_CHECKMETADATA_BASE" 
+			domainObjectName="CheckMetadataBase" 
+			enableCountByExample="false" 
+			enableUpdateByExample="false" 
+			enableDeleteByExample="false" 
+			enableSelectByExample="false" 
+		/>
+<!-- 		<table  -->
+<!-- 			tableName="RELA_PARAM_CONFIG_TYPE"  -->
+<!-- 			domainObjectName="RelaParamConfigType"  -->
+<!-- 			enableCountByExample="false"  -->
+<!-- 			enableUpdateByExample="false"  -->
+<!-- 			enableDeleteByExample="false"  -->
+<!-- 			enableSelectByExample="false"  -->
+<!-- 		/> -->
+		
+		
 <!-- 		<table  -->
 <!-- 			tableName="T_COLLECTION_DICTIONARY"  -->
 <!-- 			domainObjectName="CollectionDictionary"  -->
