@@ -21,12 +21,19 @@
    		<property name="beginningDelimiter" value="`"/>
 		<property name="endingDelimiter" value="`"/>  
    		
-		<commentGenerator  type="com.seeker.common.mybatis.MyCommentGenerator">
-		</commentGenerator>
-<!-- 		<commentGenerator  > -->
+		<!--<commentGenerator  type="com.seeker.common.mybatis.MyCommentGenerator">-->
+			<!--<property name="javaFileEncoding" value="UTF-8"/>-->
+			<!--&lt;!&ndash; 是否去除自动生成的注释 true：是 ： false:否 &ndash;&gt;-->
+			<!--<property name="suppressAllComments" value="false" />-->
+			<!--<property name="suppressDate" value="true" />-->
+		<!--</commentGenerator>-->
+ 		<commentGenerator  >
+			<!-- 这个元素用来去除指定生成的注释中是否包含生成的日期 false:表示保护 -->
+			<!-- 如果生成日期，会造成即使修改一个字段，整个实体类所有属性都会发生变化，不利于版本控制，所以设置为true -->
+			<property name="suppressDate" value="true" />
 			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-<!-- 			<property name="suppressAllComments" value="true" /> -->
-<!-- 		</commentGenerator> -->
+			<property name="suppressAllComments" value="false" />
+ 		</commentGenerator>
 		
 		<!-- 数据库链接URL、用户名、密码 -->
 		<jdbcConnection 
@@ -47,58 +54,26 @@
 		
 		<!-- 生成模型的包名和位置 -->
 		<javaModelGenerator targetPackage="${model_targetPackage}" targetProject="${targetProject}" >
-<!-- 	        <property name="trimStrings" value="true"/> -->
+ 	        <!--<property name="trimStrings" value="true"/> -->
 <!-- 			<property name="rootClass" value="com.zx.datastandard.common.base.entity.Page"/> -->
 		</javaModelGenerator>
 		
 		
 		<!-- 生成的映射文件报名和位置 -->
 		<sqlMapGenerator targetPackage="${mapper_targetPackage}" targetProject="${resourcesProject}" >
-<!-- 			<property name="enableSubPackages" value="true" /> -->
+ 			<!--<property name="enableSubPackages" value="true" /> -->
 		</sqlMapGenerator>
 		
 		<!-- 生成DAO的包名和位置 -->
 		<javaClientGenerator type="XMLMAPPER" targetPackage="${dao_targetPackage}" targetProject="${targetProject}"  >
-<!-- 			<property name="enableSubPackages" value="true" /> -->
+ 			<!--<property name="enableSubPackages" value="true" /> -->
 <!-- 			<property name="rootInterface" value="org.pbccrc.devplatform.component.dao.mybatis.support.mapper.BaseMapper"/> -->
 		</javaClientGenerator>
 		
 		
 		
 		
-<!-- 		<table  -->
-<!-- 			tableName="rela_online_task"  -->
-<!-- 			domainObjectName="RelaOnlineTask"  -->
-<!-- 			enableCountByExample="false"  -->
-<!-- 			enableUpdateByExample="false"  -->
-<!-- 			enableDeleteByExample="false"  -->
-<!-- 			enableSelectByExample="false"  -->
-<!-- 		/> -->
-<!-- 		<table  -->
-<!-- 			tableName="rela_online_task_condition"  -->
-<!-- 			domainObjectName="RelaOnlineTaskCondition"  -->
-<!-- 			enableCountByExample="false"  -->
-<!-- 			enableUpdateByExample="false"  -->
-<!-- 			enableDeleteByExample="false"  -->
-<!-- 			enableSelectByExample="false"  -->
-<!-- 		/> -->
-<!-- 		<table  -->
-<!-- 			tableName="rela_org_task"  -->
-<!-- 			domainObjectName="RelaOrgTask"  -->
-<!-- 			enableCountByExample="false"  -->
-<!-- 			enableUpdateByExample="false"  -->
-<!-- 			enableDeleteByExample="false"  -->
-<!-- 			enableSelectByExample="false"  -->
-<!-- 		/> -->
-<!-- 		<table  -->
-<!-- 			tableName="rela_org_task_condition"  -->
-<!-- 			domainObjectName="RelaOrgTaskCondition"  -->
-<!-- 			enableCountByExample="false"  -->
-<!-- 			enableUpdateByExample="false"  -->
-<!-- 			enableDeleteByExample="false"  -->
-<!-- 			enableSelectByExample="false"  -->
-<!-- 		/> -->
-		<table 
+		<table
 			tableName="T_CHECKMETADATA" 
 			domainObjectName="CheckMetadata" 
 			enableCountByExample="false" 
@@ -114,35 +89,7 @@
 			enableDeleteByExample="false" 
 			enableSelectByExample="false" 
 		/>
-<!-- 		<table  -->
-<!-- 			tableName="RELA_PARAM_CONFIG_TYPE"  -->
-<!-- 			domainObjectName="RelaParamConfigType"  -->
-<!-- 			enableCountByExample="false"  -->
-<!-- 			enableUpdateByExample="false"  -->
-<!-- 			enableDeleteByExample="false"  -->
-<!-- 			enableSelectByExample="false"  -->
-<!-- 		/> -->
-		
-		
-<!-- 		<table  -->
-<!-- 			tableName="T_COLLECTION_DICTIONARY"  -->
-<!-- 			domainObjectName="CollectionDictionary"  -->
-<!-- 			enableCountByExample="false" -->
-<!-- 			enableUpdateByExample="false"  -->
-<!-- 			enableDeleteByExample="false"  -->
-<!-- 			enableSelectByExample="false"  -->
-<!-- 			selectByExampleQueryId="false"   -->
-<!-- 		/> -->
-<!-- 		<table  -->
-<!-- 			tableName="SYS_LOG"  -->
-<!-- 			domainObjectName="SYS_LOG"  -->
-<!-- 			enableCountByExample="false" -->
-<!-- 			enableUpdateByExample="false"  -->
-<!-- 			enableDeleteByExample="false"  -->
-<!-- 			enableSelectByExample="false"  -->
-<!-- 			selectByExampleQueryId="false"   -->
-<!-- 		/> -->
-		
+
 		
 
 		

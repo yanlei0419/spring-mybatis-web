@@ -41,6 +41,7 @@ public class MyCommentGenerator implements CommentGenerator{
 
     public MyCommentGenerator() {
         super();
+        System.out.print("MyCommentGenerator");
         properties = new Properties();
         systemPro = System.getProperties();
         suppressDate = false;

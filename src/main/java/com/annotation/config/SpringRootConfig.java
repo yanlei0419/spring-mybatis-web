@@ -2,15 +2,10 @@ package com.annotation.config;
 
 import java.util.Map;
 
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 //<context:component-scan base-package="com.seeker">  
@@ -34,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //@ComponentScan(
 //		basePackages = {"com.seeker"}
 //		)  
-@ImportResource("classpath:application/spring.xml")
+@ImportResource("classpath:spring/spring.xml")
 @Configuration
 @PropertySource({"classpath:/log4j.properties"})
 @Controller
