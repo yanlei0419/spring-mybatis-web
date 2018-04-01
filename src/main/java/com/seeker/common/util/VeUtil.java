@@ -251,7 +251,31 @@ public class VeUtil {
 	}
 
 	public static boolean isNotNullList(List list) {
+		return null!=list?true:false;
+	}
+	public static boolean isNotEmptyList(List list) {
 		return null!=list&&!list.isEmpty()?true:false;
+	}
+	public static boolean isNotNullArray(Object[] val) {
+		return null!=val?true:false;
+	}
+	public static boolean isNotEmptyArray(Object[] val) {
+		return null!=val&&val.length!=0?true:false;
+	}
+
+
+
+	public static boolean isNullList(List list) {
+		return !isNotNullList(list);
+	}
+	public static boolean isEmptyList(List list) {
+		return !isNotEmptyList(list);
+	}
+	public static boolean isNullArray(Object[] val) {
+		return !isNotNullArray(val);
+	}
+	public static boolean isEmptyArray(Object[] val) {
+		return !isNotEmptyArray(val);
 	}
 	
 	//首字母大写
