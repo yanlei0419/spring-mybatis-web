@@ -1,4 +1,4 @@
-package com.seeker.common.util;
+package com.seeker.common.excel.annotation;
 
 
 
@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)   
 @Target(ElementType.FIELD)
-public @interface VeExcel {
+public @interface ImportExcelTitle {
 	//导入时，对应数据库的字段 主要是用户区分每个字段，不能有annocation重名的
 	//导出时的列名   导出排序跟定义了annotation的字段的顺序有关  
 	public String exportName();

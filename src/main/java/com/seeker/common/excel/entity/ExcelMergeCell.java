@@ -11,6 +11,8 @@ public class ExcelMergeCell {
     private short vertical_align= CellStyle.VERTICAL_CENTER;//垂直
     private short text_align= CellStyle.ALIGN_CENTER;//水平
 
+    public ExcelMergeCell() {
+    }
 
     public ExcelMergeCell(String val) {
         this.val = val;

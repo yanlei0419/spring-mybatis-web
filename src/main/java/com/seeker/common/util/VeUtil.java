@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
+import com.seeker.common.excel.annotation.ExportExcelTitle;
+import com.seeker.common.excel.annotation.ImportExcelTitle;
+import com.seeker.common.excel.entity.ExcelMergeCell;
+import com.seeker.common.excel.entity.ExcelMergeRow;
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
@@ -90,7 +94,9 @@ public class VeUtil {
 	public static boolean isNotNull(String val){
 		return val!=null&&val.length()>0&&!"".equals(val.trim())&&!"null".equals(val.trim())&&!"undefined".equals(val.trim())?true:false;
 	}
-	
+
+
+
 	/**
 	 * 转换参数  Conversion
 	 * @param val
@@ -246,10 +252,6 @@ public class VeUtil {
 	}
 	
 
-	public static void main(String[] args) {
-		System.out.println(VeUtil.isEquals("2", "1"));
-	}
-
 	public static boolean isNotNullList(List list) {
 		return null!=list?true:false;
 	}
@@ -316,7 +318,7 @@ public class VeUtil {
 		Map<String, Method> fieldSetConvertMap = new HashMap<String, Method>();
 		for (int i = 0; i < filed.length; i++) {
 			Field f = filed[i];
-			VeExcel excel = f.getAnnotation(VeExcel.class);
+			ImportExcelTitle excel = f.getAnnotation(ImportExcelTitle.class);
 			if (excel != null) {
 				String fieldname = f.getName();
 				String setMethodName = "set" + fieldname.substring(0, 1).toUpperCase() + fieldname.substring(1);
@@ -335,7 +337,127 @@ public class VeUtil {
 		map.put("fieldSetMap",fieldSetMap);
 		return map;
 	}
-	
+
+
+	/**
+	 * 获取类的属性封装成map集合返回
+	 * @param clazz
+	 * @return
+	 */
+	public static Map<String, Field> getMapClassField(Class clazz) {
+		Field[] fields=clazz.getDeclaredFields();
+		Map<String,Field> map=new HashMap<>();
+		for(int i=0;i<fields.length;i++){
+			fields[i].setAccessible(true);
+			l.debug(fields[i].getName());
+			map.put(fields[i].getName(),fields[i]);
+		}
+		return map;
+	}
+
+
+	/**
+	 * 获取该类全部的方法 返回一个map集合  key  方法名称 值为 方法对象  因为方法可以重载所以可能方法名相同
+	 * 方法名称需要做单独处理 handleClassMethodName
+	 * 以应对bean对象属性中大小写问题
+	 * @param clazz
+	 * @return
+	 */
+	public static Map<String,List<Method>> getMapClassMethods(Class clazz){
+		Method[] ms=clazz.getDeclaredMethods();//拿到该类所有的方法,不包括继承的类
+		Map<String,List<Method>> mMap=new HashMap<>();
+		List<Method> list=null;
+		String methodName="";
+		for (int i = 0; i < ms.length; i++) {
+			methodName=handleClassMethodName(ms[i].getName());
+			l.debug(methodName);
+			list=mMap.get(methodName);
+			if(VeUtil.isNullList(list)){
+				list=new ArrayList<>();
+			}
+			list.add(ms[i]);
+			mMap.put(methodName,list);
+		}
+		return mMap;
+	}
+
+	/**
+	 * 通过传入类和属性名称 获取 属性的相关信息
+	 * @param clazz
+	 * @param fieldName
+	 * @return
+	 */
+	public static Field getClassFieldByName(Class clazz,String fieldName) {
+		Map<String, Field> map = getMapClassField(clazz);
+		return map.get(fieldName);
+	}
+
+	/**
+	 * 通过传入类和方法名称 获取方法集合
+	 * @param clazz
+	 * @param methodName
+	 * @return
+	 */
+	public static List<Method> getClassMethodByName(Class clazz,String methodName){
+		Map<String, List<Method>> map = getMapClassMethods(clazz);
+		return map.get(handleClassMethodName(methodName));
+	}
+	private static String handleClassMethodName(String val){
+		return val.toLowerCase();
+	}
+
+
+	/**
+	 * 获取对象中的get方法
+	 * @param clazz
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public static Method getClassGetMethodByName(Class clazz,String name) throws Exception {
+		List<Method> list = getClassMethodByName(clazz, "get"+name);
+		Field f=getClassFieldByName(clazz,name);
+		for (int i = 0; i <list.size() ; i++) {
+			Method m=list.get(i);
+			if(m.getReturnType().equals(f.getType())&&m.getGenericParameterTypes().length==0){
+				return m;
+			}
+		}
+		throw new Exception("传入的数据有问题 : "+name+" Class : "+clazz.getClass().getName());
+	}
+
+	/**
+	 * 获取类对象中属性上的注解信息
+	 * @param clazz
+	 * @return
+	 */
+	public static Map<String,Object> getMapClassFieldAnnotation(Class clazz,Class annotationClazz){
+		Map<String,Field> fieldMap=getMapClassField(clazz);
+		Map<String,Object> map=new HashMap<>();
+		Field f=null;
+		for (String key: fieldMap.keySet()) {
+			f=fieldMap.get(key);
+			if(null==f){
+				continue;
+			}
+			map.put(key,f.getAnnotation(annotationClazz));
+		}
+		return map;
+	}
+
+
+
+
+
+
+
+	public static void main(String[] args) throws Exception {
+		Method val = getClassGetMethodByName(ExcelMergeCell.class, "val");
+		System.out.println(val);
+
+
+	}
+
 
 
 }

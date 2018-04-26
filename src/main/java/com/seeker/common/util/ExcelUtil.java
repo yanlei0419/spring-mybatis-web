@@ -199,7 +199,7 @@ public class ExcelUtil {
 		for (int i = 0; i <list.size() ; i++) {
 			cellSNum=0;
 			cellENum=0;
-			rowNum+=startRowNum+i;
+			rowNum=startRowNum+i;
 			Row row=sheet.createRow(rowNum);
 
 			row.setHeight(TitleRowHeight);
