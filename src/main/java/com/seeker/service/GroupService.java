@@ -2,24 +2,28 @@ package com.seeker.service;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.seeker.entity.Group;
 
 public interface GroupService {
 
-	public List<Group> getList(Group po);
+	List<Group> getList(Group po);
 
-	public int getCount(Group po);
+	int getCount(Group po);
 
-	public int save(Group po);
+	int save(Group po);
 
-	public int delete(Group po);
+	int delete(Group po);
 
-	public int update(Group po);
+	int update(Group po);
 
-	public List<Group> getLoginGroupUserDetail(Group g);
+	List<Group> getLoginGroupUserDetail(Group g);
 
-	public Group detail(Group po);
+	Group detail(Group po);
 
-	public List<Group> getAllGroupPrivs();
+	List<Group> getAllGroupPrivs();
+
+
+	PageInfo<Group> getPageList(Group po);
 
 }

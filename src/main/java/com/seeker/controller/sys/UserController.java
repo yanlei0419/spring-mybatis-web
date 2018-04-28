@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.github.pagehelper.PageInfo;
+import com.seeker.entity.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -33,12 +35,10 @@ public class UserController extends BaseController {
 //	@RequestMapping(value="/getList",method=RequestMethod.GET)
 	@GetMapping(value="/getList")
 	public void getList(HttpServletRequest req, HttpServletResponse resp ,User po) throws IOException{
-		List<User> rows=this.us.getList(po);
-		int total=this.us.getCount(po);
-		String result=JsonUtil.toJSONStringByFastjson(total, rows);
+		PageInfo<User> data=this.us.getPageList(po);
+		String result=JsonUtil.toJSONStringByFastjson(data);
 		this.printJson(resp, result);
 	}
-	
 
 	
 	
@@ -99,9 +99,8 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value="/group/getList",method=RequestMethod.POST)
 	public void getUserGroupList(HttpServletRequest req, HttpServletResponse resp ,User po) throws IOException{
-		List<User> rows=this.us.getUserGroupList(po);
-		int total=this.us.getUserGroupCount(po);
-		String result=JsonUtil.toJSONStringByFastjson(total, rows);
+		PageInfo<User> data=this.us.getUserGroupPageList(po);
+		String result=JsonUtil.toJSONStringByFastjson(data);
 		this.printJson(resp, result);
 	}
 	

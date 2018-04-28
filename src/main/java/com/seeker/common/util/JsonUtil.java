@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
@@ -45,47 +47,35 @@ public class JsonUtil {
 		return result;
 	}
 
+
+
+	private static String toJson(Map map){
+		return JSON.toJSONString(map);
+	}
+
+
+
+	public static String toJSONStringByFastjson(PageInfo data) {
+		Map jsonMap = new HashMap();
+		jsonMap.put("total", Long.valueOf(data.getTotal()));
+		jsonMap.put("rows", data.getList());
+		String result=toJson(jsonMap);
+		logger.debug(result);
+		return result;
+	}
+
 	/**
 	 * 获取分页json串
 	 * @param total
 	 * @param rows
 	 * @return
 	 */
-	
 
 	public static String toJSONStringByFastjson(int total, List rows) {
 		Map jsonMap = new HashMap();
 		jsonMap.put("total", Integer.valueOf(total));
 		jsonMap.put("rows", rows);
-		String result=JSON.toJSONString(jsonMap);
-		logger.debug(result);
-		return result;
-	}
-	/**
-	 * 获取分页json串
-	 * @param total
-	 * @param rows
-	 * @return
-	 */
-	public static String toJSONStringByFastjson(int total, List rows,List sel) {
-		Map jsonMap = new HashMap();
-		jsonMap.put("total", Integer.valueOf(total));
-		jsonMap.put("rows", rows);
-		// 测试数据
-//		sel=new ArrayList<String>();
-//		sel.add("codecode");
-//		sel.add("col1col1");
-//		sel.add("上传人create_bys");
-		jsonMap.put("sel",sel);
-		String result=JSON.toJSONString(jsonMap);
-		logger.debug(result);
-		return result;
-	}
-	public static String toJSONStringByFastjson(int total, Collection rows) {
-		Map jsonMap = new HashMap();
-		jsonMap.put("total", Integer.valueOf(total));
-		jsonMap.put("rows", rows);
-		String result=JSON.toJSONString(jsonMap);
+		String result=toJson(jsonMap);
 		logger.debug(result);
 		return result;
 	}

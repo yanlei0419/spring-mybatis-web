@@ -123,7 +123,7 @@
 		<!--<property name="mapperLocations" value="classpath:mybatis/mapper/orc/sys/MenuMapper.xml" />-->
  		<property name="mapperLocations" >
  			<list>
- 				<value>classpath:mybatis/mapper/orc/**/*Mapper.xml</value>
+ 				<value>classpath:mybatis/mapper/common/**/*Mapper.xml</value>
  				<!--<value>classpath:mybatis/mapper/orc/*Mapper.xml</value>-->
  			</list>
  		</property>

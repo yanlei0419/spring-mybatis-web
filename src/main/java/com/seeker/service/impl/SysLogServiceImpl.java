@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.seeker.entity.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -51,6 +54,15 @@ public class SysLogServiceImpl implements SysLogService{
 			l.error(m, e);
 			return 0;
 		}
+	}
+
+	@Override
+	public PageInfo<SysLog> getPageList(SysLog po) {
+		PageHelper.startPage(po.getPage(),po.getRows());
+		//startPage后紧跟的这个查询就是分页查询
+		//使用PageInfo包装查询结果，只需要将pageInfo交给页面就可以
+		//pageINfo封装了分页的详细信息，也可以指定连续显示的页数
+		return new PageInfo<SysLog>(this.dao.getList(po));
 	}
 
 	public void setDao(SysLogMapper dao) {

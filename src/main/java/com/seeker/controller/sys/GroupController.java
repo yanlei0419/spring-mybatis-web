@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -55,9 +57,9 @@ public class GroupController extends BaseController {
 	
 	@RequestMapping(value="/getList",method=RequestMethod.GET)
 	public void getList(HttpServletRequest req, HttpServletResponse resp, Group po) throws Exception{
-		List<Group> list=this.gs.getList(po);
-		int total=this.gs.getCount(po);
-		String result=JsonUtil.toJSONStringByFastjson(total, list);
+
+		PageInfo<Group> data=this.gs.getPageList(po);
+		String result=JsonUtil.toJSONStringByFastjson(data);
 		this.print(resp, result);
 	}
 	

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,15 +24,10 @@ public class SysLogController extends BaseController {
 	private SysLogService sysLogService;
 	
 	@RequestMapping("/getList")
-	public void getList(HttpServletRequest req,
-			HttpServletResponse res,SysLog po) throws IOException{
-		res.setCharacterEncoding("UTF-8");
-		res.setContentType("text/html");
+	public void getList(HttpServletResponse res,SysLog po) throws IOException{
 		po=(SysLog) this.initPage(po);
-//		SysLogService sysLogService=(SysLogService) SpringContextUtil.getBean("sysLogService");
-		List<SysLog> rows=sysLogService.getList(po);
-		int total=sysLogService.getCount(po);
-		String result=JsonUtil.toJSONStringByFastjson(total, rows);
+		PageInfo<SysLog> data=this.sysLogService.getPageList(po);
+		String result=JsonUtil.toJSONStringByFastjson(data);
 		PrintWriter pw=res.getWriter();
 		pw.print(result);
 		pw.flush();

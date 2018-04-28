@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import com.seeker.common.util.Uuid;
@@ -80,6 +82,19 @@ public class GroupServiceImpl implements GroupService {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public PageInfo<Group> getPageList(Group po) {
+		//引入分页查询，使用PageHelper分页功能
+		//在查询之前传入当前页，然后多少记录
+		PageHelper.startPage(po.getPage(),po.getRows());
+		//startPage后紧跟的这个查询就是分页查询
+		//使用PageInfo包装查询结果，只需要将pageInfo交给页面就可以
+		//pageINfo封装了分页的详细信息，也可以指定连续显示的页数
+
+
+		return new PageInfo<Group>(this.dao.getList(po));
 	}
 
 

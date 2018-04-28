@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.seeker.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
@@ -17,10 +20,6 @@ import com.seeker.common.util.EncodeUtils;
 import com.seeker.common.util.LoginUtils;
 import com.seeker.common.util.SysConstant;
 import com.seeker.common.util.Uuid;
-import com.seeker.entity.Group;
-import com.seeker.entity.GroupUser;
-import com.seeker.entity.Menu;
-import com.seeker.entity.User;
 import com.seeker.mapper.GroupUserMapper;
 import com.seeker.mapper.UserMapper;
 import com.seeker.service.UserService;
@@ -80,6 +79,18 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 		}
 	}
 
+
+
+	@Override
+	public PageInfo<User> getPageList(User po) {
+		PageHelper.startPage(po.getPage(),po.getRows());
+		return new PageInfo<User>(this.dao.getList(po));
+	}
+	@Override
+	public PageInfo<User> getUserGroupPageList(User po) {
+		PageHelper.startPage(po.getPage(),po.getRows());
+		return new PageInfo<User>(this.dao.getList(po));
+	}
 	@Override
 	public int save(User po) throws Exception {
 		po.setId(Uuid.getUUID());
