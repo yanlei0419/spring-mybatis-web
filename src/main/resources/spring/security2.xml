@@ -7,27 +7,27 @@
 
 	<sec:global-method-security pre-post-annotations="enabled" />
 
-	<sec:http pattern="/**/*.*" security="none" />
+	<sec:http pattern="/frame/skins/sky/tab/itemChildBg.jpg" security="none" />
 	<!-- 开发期间，所有的页面都不验证 -->
 	<sec:http pattern="/login.jsp" security="none" />
 	<sec:http pattern="/login/*.*" security="none" />
 	<sec:http pattern="/index.jsp" security="none" />
-	<sec:http pattern="/error/*.*" security="none" />
-	<sec:http pattern="/plugins/**" security="none" />
+	<sec:http pattern="/error/privs.jsp" security="none" />
+	<sec:http pattern="/plugins/formValidator4.1.3/themes/126/js" security="none" />
 	<sec:http pattern="/images/**" security="none" />
-	<sec:http pattern="/**/*.jpg" security="none" />
+	<sec:http pattern="/frame/skins/dams/tab/list3_itemBg.jpg" security="none" />
 	<sec:http pattern="/**/*.jpeg" security="none" />
-	<sec:http pattern="/**/*.png" security="none" />
-	<sec:http pattern="/**/*.gif" security="none" />
-	<sec:http pattern="/**/*.js" security="none" />
-	<sec:http pattern="/**/*.css" security="none" />
+	<sec:http pattern="/plugins/easyui/themes/icons/application_error.png" security="none" />
+	<sec:http pattern="/frame/skins/sky/box/box_tool_left.gif" security="none" />
+	<sec:http pattern="/plugins/plupload-2.3.1/js/i18n/az.js" security="none" />
+	<sec:http pattern="/plugins/easyui/themes/gray/window.css" security="none" />
 	<sec:http pattern="/**/*.htc" security="none" />
 	<sec:http pattern="/**/*.ico" security="none" />
 	<sec:http pattern="/**/*.do*" security="none" />
-	<sec:http pattern="/**/add.jsp*" security="none" />
-	<sec:http pattern="/**/update.jsp*" security="none" />
-	<sec:http pattern="/**/detail.jsp*" security="none" />
-	<sec:http pattern="/**/*.xml*" security="none" />
+	<sec:http pattern="/jsp/sys/user/add.jsp" security="none" />
+	<sec:http pattern="/jsp/sys/user/update.jsp" security="none" />
+	<sec:http pattern="/jsp/sys/group/detail.jsp" security="none" />
+	<sec:http pattern="/mg/generatorConfig.xml" security="none" />
 
 
 	<!-- ExceptionTranslationFilter的accessDeniedHandler实现access-denied-page功能 -->
