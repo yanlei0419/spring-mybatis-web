@@ -332,6 +332,23 @@
             <artifactId>ant</artifactId>
             <version>1.6.5</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/cglib/cglib -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-lgpl</artifactId>
+            <version>1.9.12</version>
+        </dependency>
+
 
 
         <dependency>
@@ -486,6 +503,36 @@
             <!-- </plugin> -->
 
             <!--打war包到指定的目录下 -->
+
+
+
+           <!--<plugin>-->
+               <!--<groupId>org.codehaus.cargo</groupId>-->
+               <!--<artifactId>cargo-maven2-plugin</artifactId>-->
+                 <!--<version>1.2.3</version>-->
+                 <!--<configuration>-->
+                     <!--<container>-->
+                           <!--&lt;!&ndash; 指明使用的tomcat服务器版本 &ndash;&gt;-->
+                         <!--<containerId>tomcat7x</containerId>-->
+                         <!--&lt;!&ndash;指明tomcat服务器的安装目录 &ndash;&gt;-->
+                         <!--<home>D:/apache-tomcat-7.0.53</home>-->
+                     <!--</container>-->
+                     <!--<configuration>-->
+                         <!--<type>existing</type>-->
+                         <!--&lt;!&ndash;指明tomcat服务器的安装目录 &ndash;&gt;-->
+                         <!--<home>D:/apache-tomcat-7.0.53</home>-->
+                     <!--</configuration>-->
+                 <!--</configuration>-->
+                 <!--<executions>-->
+                   <!--<execution>-->
+                       <!--<id>cargo-run</id>-->
+                       <!--<phase>install</phase>-->
+                       <!--<goals>-->
+                           <!--<goal>run</goal>-->
+                       <!--</goals>-->
+                   <!--</execution>-->
+               <!--</executions>-->
+           <!--</plugin>-->
         </plugins>
     </build>
 </project> 
