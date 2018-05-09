@@ -1,4 +1,4 @@
-package com.seeker.common.util.config;
+package com.seeker.common.config;
 
 import java.io.InputStream;
 import java.util.Properties;
@@ -24,7 +24,7 @@ public class SysConfig extends Properties {
 	
 	/**
 	 * 初始化文件名配置信息
-	 * @param cfgFile
+	 * @param cfgFilePath
 	 */
 	private static void init(String cfgFilePath) {
 		try {

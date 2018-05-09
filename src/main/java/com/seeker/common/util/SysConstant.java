@@ -1,6 +1,7 @@
 package com.seeker.common.util;
 
-import com.seeker.common.util.config.SysConfig;
+
+import com.seeker.common.config.SysConfig;
 
 public class SysConstant {
 
