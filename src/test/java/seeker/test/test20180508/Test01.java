@@ -2,7 +2,7 @@ package seeker.test.test20180508;
 
 public class Test01 {
     static boolean a(int a){
-        return a%2==1;
+        return a%2!=0;
     }
 
     public static void main(String[] args) throws InterruptedException {

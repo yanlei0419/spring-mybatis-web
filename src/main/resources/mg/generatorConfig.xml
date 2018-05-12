@@ -19,8 +19,11 @@
    		<property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
    		
    		<property name="beginningDelimiter" value="`"/>
-		<property name="endingDelimiter" value="`"/>  
-   		
+		<property name="endingDelimiter" value="`"/>
+		<!--是否覆盖文件-->
+		<property name="mergeable" value="false"/>
+
+		<commentGenerator  type="com.seeker.common.mybatis.MyCommentGenerator">
 		<commentGenerator  type="com.seeker.common.mybatis.MyCommentGenerator">
 			<property name="javaFileEncoding" value="UTF-8"/>
 			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -73,14 +76,33 @@
 		
 		
 		
+		<!--<table schema="=${data.schema}"-->
+			   <!--alias="User"-->
+			<!--tableName="sys_user"-->
+			<!--domainObjectName="SysUser"-->
+			<!--enableCountByExample="false" -->
+			<!--enableUpdateByExample="false" -->
+			<!--enableDeleteByExample="false" -->
+			<!--enableSelectByExample="false" -->
+		<!--&gt;-->
+		<!--<generatedKey column="id" sqlStatement="select uuid_short()"/>-->
+			
+			
+		<!--</table>-->
+		<!--如果没有id 参数会出问题-->
 		<table
-			tableName="test_log"
-			domainObjectName="test_log"
-			enableCountByExample="false" 
-			enableUpdateByExample="false" 
-			enableDeleteByExample="false" 
-			enableSelectByExample="false" 
-		/>
+			   alias="User"
+			   tableName="sys_user"
+			   domainObjectName="SysUser"
+			   enableCountByExample="false"
+			   enableUpdateByExample="false"
+			   enableDeleteByExample="false"
+			   enableSelectByExample="false"
+		>
+			<!--<generatedKey column="id" sqlStatement="select uuid_short()"/>-->
+
+
+		</table>
 
 
 		

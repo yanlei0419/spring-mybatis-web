@@ -3,6 +3,9 @@ package com.seeker.common.util;
 
 import com.seeker.common.config.SysConfig;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SysConstant {
 
 	public final static String SYSTEM_NAME 					= "探索";// 添加
@@ -36,6 +39,12 @@ public class SysConstant {
 	 * 分隔符
 	 */
 	public final static String sign 					= "--";
+
+	public final static Map<String,String> map=new HashMap<String,String>(){//匿名内部类
+		{
+			put("vegetto","GoKu+Vegata");
+		}
+	};
 	
 
 }
