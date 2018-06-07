@@ -365,7 +365,7 @@
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
-            <version>3.7.4</version>
+            <version>4.1.6</version>
         </dependency>
 
         <!-- Oracle驱动包 -->
