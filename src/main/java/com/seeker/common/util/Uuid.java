@@ -15,8 +15,11 @@ public class Uuid {
 		return UUID.randomUUID().toString();
 	}
 
-	public static synchronized String getUUID(){
+	public static String getUUID(){
 		return Uuid.getInstance().getId();
+	}
+	public static String getUUIDNotSign(){
+		return Uuid.getInstance().getId().replaceAll("-","");
 	}
 
 }
