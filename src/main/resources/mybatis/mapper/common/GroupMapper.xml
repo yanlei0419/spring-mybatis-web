@@ -9,6 +9,20 @@
 		<result column="userid" jdbcType="CHAR" property="userId" />
 		<result column="flag" jdbcType="CHAR" property="flag" />
 	</resultMap>
+	<!--
+	eviction是缓存的淘汰算法，可选值有"LRU"、"FIFO"、"SOFT"、"WEAK"，缺省值是LRU
+
+	LRU：最近最少使用，移除最长时间不被使用的对象，默认策略
+
+	FIFO：先进先出，按对象进入缓存的顺序来移除
+
+	SOFT：软引用，移除基于垃圾回收器状态和软引用规则的对象
+
+	WEAK：弱引用，更积极地移除基于垃圾收集器状态和弱引用规则的对象
+	-->
+
+	<cache readOnly="true" size="500" flushInterval="120000" eviction="LRU" />
+
 
 
 	<sql id="Base_Column_List">
@@ -28,7 +42,7 @@
 			<if test="groupName != null and groupName != ''"> and t.group_name like '%${groupName}%' </if>
 		</if>
 	</sql>
-	<select id="getList" parameterType="Group" resultMap="Group">
+	<select id="getList" parameterType="Group" resultMap="Group"  useCache="true" flushCache="false" >
 		select
 		<include refid="Base_Column_List" />
 		from
@@ -39,7 +53,7 @@
 			<include refid="BaseCondition" />
 		</where>
 	</select>
-	<select id="getCount" parameterType="Group" resultType="int">
+	<select id="getCount" parameterType="Group" resultType="int" useCache="true" flushCache="false">
 		select
 		count(1)
 		from
@@ -56,7 +70,7 @@
 		<if test="userId != null and userId != ''"> and userId = #{userId} </if>
 		<if test="status != null and status != ''"> and t.status = #{status} </if>
 	</sql>
-	<select id="getLoginGroupUserDetail" parameterType="Group" resultMap="Group">
+	<select id="getLoginGroupUserDetail" parameterType="Group" resultMap="Group" useCache="true" flushCache="false">
 		select
 		<include refid="Base_Column_List" />
 		from
@@ -72,7 +86,7 @@
 
 
 
-	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="Group">
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="Group" useCache="true" flushCache="false">
 		select
 		<include refid="Base_Column_List" />
 		from
@@ -80,12 +94,12 @@
 		t
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true">
 		delete from
 		<include refid="TABLE_NAME" />
 		where ID = #{id,jdbcType=VARCHAR}
 	</delete>
-	<insert id="insert" parameterType="Group">
+	<insert id="insert" parameterType="Group" flushCache="true">
 		insert into
 		<include refid="TABLE_NAME" />
 		(ID, GROUP_NAME, REMARK,
@@ -93,7 +107,7 @@
 		values (#{id,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
 		#{status,jdbcType=CHAR})
 	</insert>
-	<insert id="insertSelective" parameterType="Group">
+	<insert id="insertSelective" parameterType="Group"  flushCache="true">
 		insert into
 		<include refid="TABLE_NAME" />
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -125,7 +139,7 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="Group">
+	<update id="updateByPrimaryKeySelective" parameterType="Group"  flushCache="true">
 		update
 		<include refid="TABLE_NAME" />
 		<set>
@@ -141,7 +155,7 @@
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="Group">
+	<update id="updateByPrimaryKey" parameterType="Group" flushCache="true">
 		update
 		<include refid="TABLE_NAME" />
 		set GROUP_NAME = #{groupName,jdbcType=VARCHAR},

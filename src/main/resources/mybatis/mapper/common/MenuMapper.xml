@@ -20,17 +20,17 @@
 	<sql id="Base_Column_List">
 		t.ID, t.NAME, t.PID, t.URL, t.TYPE, t.STATUS, t.CREATE_TIME, t.CREATE_BY, t.REMARK, t.SEQ, t.MLEVEL,t.icon
 	</sql>
-	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="Menu">
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="Menu" flushCache="false" useCache="true" >
 		select
 		<include refid="Base_Column_List" />
 		from SYS_MENU
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true">
 		delete from SYS_MENU
 		where ID = #{id,jdbcType=VARCHAR}
 	</delete>
-	<insert id="insert" parameterType="Menu">
+	<insert id="insert" parameterType="Menu" flushCache="true">
 		insert into SYS_MENU (ID, NAME, PID,
 		URL, TYPE, STATUS, CREATE_TIME,
 		CREATE_BY, REMARK, SEQ,
@@ -40,7 +40,7 @@
 		#{createBy,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{seq,jdbcType=DECIMAL},
 		#{mlevel,jdbcType=DECIMAL},#{icon})
 	</insert>
-	<insert id="insertSelective" parameterType="Menu">
+	<insert id="insertSelective" parameterType="Menu" flushCache="true">
 		insert into SYS_MENU
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -113,7 +113,7 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="Menu">
+	<update id="updateByPrimaryKeySelective" parameterType="Menu" flushCache="true">
 		update SYS_MENU
 		<set>
 			<if test="name != null">
@@ -149,7 +149,7 @@
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="Menu">
+	<update id="updateByPrimaryKey" parameterType="Menu" flushCache="true">
 		update SYS_MENU
 		set NAME = #{name,jdbcType=VARCHAR},
 		PID = #{pid,jdbcType=VARCHAR},
@@ -165,7 +165,7 @@
 	</update>
 
 
-	<select id="getList" parameterType="Menu" resultMap="Menu">
+	<select id="getList" parameterType="Menu" resultMap="Menu"  flushCache="false" useCache="true">
 		select
 		<include refid="Base_Column_List" />
 		from
@@ -181,7 +181,7 @@
 		order by seq asc
 	</select>
 	<!-- 做权限菜单使用的查询语句 -->
-	<select id="getPrivsMenuListByGroupId" parameterType="Menu" resultMap="Menu">
+	<select id="getPrivsMenuListByGroupId" parameterType="Menu" resultMap="Menu"  flushCache="false" useCache="true">
 		select
 		<include refid="Base_Column_List" />
 		,groupId
@@ -203,7 +203,7 @@
 
 
 	<!-- 用户权限菜单使用的查询语句 -->
-	<select id="getGroupMenuList" parameterType="Menu" resultMap="Menu">
+	<select id="getGroupMenuList" parameterType="Menu" resultMap="Menu"  flushCache="false" useCache="true">
 		select
 		<include refid="Base_Column_List" />
 		from

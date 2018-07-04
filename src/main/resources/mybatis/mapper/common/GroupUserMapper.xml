@@ -12,7 +12,7 @@
 	<sql id="TABLE_NAME">SYS_GROUP_USER</sql>
 
 
-	<delete id="delete" parameterType="GroupUser">
+	<delete id="delete" parameterType="GroupUser" flushCache="true">
 		delete
 		from
 		<include refid="TABLE_NAME" />
@@ -23,19 +23,19 @@
 	</delete>
 
 
-	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="GroupUser">
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="GroupUser" flushCache="false" useCache="true">
 		select
 		<include refid="Base_Column_List" />
 		from
 		<include refid="TABLE_NAME" />
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true">
 		delete from
 		<include refid="TABLE_NAME" />
 		where ID = #{id,jdbcType=VARCHAR}
 	</delete>
-	<insert id="insert" parameterType="GroupUser">
+	<insert id="insert" parameterType="GroupUser" flushCache="true">
 		insert into
 		<include refid="TABLE_NAME" />
 		(ID, USERID, GROUPID
@@ -43,7 +43,7 @@
 		values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{groupid,jdbcType=VARCHAR}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="GroupUser">
+	<insert id="insertSelective" parameterType="GroupUser" flushCache="true">
 		insert into
 		<include refid="TABLE_NAME" />
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -69,7 +69,7 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="GroupUser">
+	<update id="updateByPrimaryKeySelective" parameterType="GroupUser" flushCache="true">
 		update
 		<include refid="TABLE_NAME" />
 		<set>
@@ -82,7 +82,7 @@
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="GroupUser">
+	<update id="updateByPrimaryKey" parameterType="GroupUser" flushCache="true">
 		update
 		<include refid="TABLE_NAME" />
 		set USERID = #{userid,jdbcType=VARCHAR},

@@ -9,7 +9,7 @@
 	<sql id="Base_Column_List">
 		ID, MENUID, GROUPID
 	</sql>
-	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="GroupMenu">
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="GroupMenu" flushCache="false" useCache="true">
 		select
 		<include refid="Base_Column_List" />
 		from SYS_GROUP_MENU
@@ -17,7 +17,7 @@
 	</select>
 
 
-	<delete id="deleteByGroupId" parameterType="java.lang.String">
+	<delete id="deleteByGroupId" parameterType="java.lang.String" flushCache="true">
 		delete from SYS_GROUP_MENU
 		where groupid = #{groupId,jdbcType=VARCHAR}
 	</delete>
@@ -26,17 +26,17 @@
 
 
 
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true">
 		delete from SYS_GROUP_MENU
 		where ID = #{id,jdbcType=VARCHAR}
 	</delete>
-	<insert id="insert" parameterType="GroupMenu">
+	<insert id="insert" parameterType="GroupMenu" flushCache="true">
 		insert into SYS_GROUP_MENU (ID, MENUID, GROUPID
 		)
 		values (#{id,jdbcType=VARCHAR}, #{menuid,jdbcType=VARCHAR}, #{groupid,jdbcType=VARCHAR}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="GroupMenu">
+	<insert id="insertSelective" parameterType="GroupMenu" flushCache="true">
 		insert into SYS_GROUP_MENU
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -61,7 +61,7 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="GroupMenu">
+	<update id="updateByPrimaryKeySelective" parameterType="GroupMenu" flushCache="true">
 		update SYS_GROUP_MENU
 		<set>
 			<if test="menuid != null">
@@ -73,7 +73,7 @@
 		</set>
 		where ID = #{id,jdbcType=VARCHAR}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="GroupMenu">
+	<update id="updateByPrimaryKey" parameterType="GroupMenu" flushCache="true">
 		update SYS_GROUP_MENU
 		set MENUID = #{menuid,jdbcType=VARCHAR},
 		GROUPID = #{groupid,jdbcType=VARCHAR}
