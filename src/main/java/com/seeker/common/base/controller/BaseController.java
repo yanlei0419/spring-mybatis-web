@@ -240,11 +240,22 @@ public class BaseController {
 	}
 
 
-
-	public Object initPage(Page page) {
-		return mysqlInitPage(page);
+	/**
+	 * 错误写法
+	 * 只是一个例子
+	 * @param page
+	 * @param <T>
+	 * @return
+	 */
+	@Deprecated
+	public <T extends Page> T initPage1(T page) {
+		this.mysqlInitPage(page);
+		return page;
 	}
-	public Object oracleInitPage(Page page) {
+	public void initPage(Page page) {
+		this.mysqlInitPage(page);
+	}
+	public void oracleInitPage(Page page) {
 		int rows, p;
 		try {
 			rows = page.getRows();
@@ -258,9 +269,8 @@ public class BaseController {
 		}
 		page.setBegin(rows * (p - 1) + 1);
 		page.setEnd(rows * p);
-		return page;
 	}
-	public Object mysqlInitPage(Page page) {
+	public void mysqlInitPage(Page page) {
 		int rows, p;
 		try {
 			rows = page.getRows();
@@ -274,7 +284,6 @@ public class BaseController {
 			p = 1;
 		}
 		page.setBegin(rows * (p - 1));
-		return page;
 	}
 
 

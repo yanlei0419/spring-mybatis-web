@@ -25,7 +25,7 @@ public class SysLogController extends BaseController {
 	
 	@RequestMapping("/getList")
 	public void getList(HttpServletResponse res,SysLog po) throws IOException{
-		po=(SysLog) this.initPage(po);
+		this.initPage(po);
 		PageInfo<SysLog> data=this.sysLogService.getPageList(po);
 		String result=JsonUtil.toJSONStringByFastjson(data);
 		PrintWriter pw=res.getWriter();

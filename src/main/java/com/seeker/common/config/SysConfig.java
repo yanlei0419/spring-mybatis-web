@@ -12,7 +12,7 @@ public class SysConfig extends Properties {
 	private static final long serialVersionUID = 1L;
 	private static Logger l = LoggerFactory.getLogger(SysConfig.class);
 	private SysConfig() {}
-	
+
 	private static SysConfig prop=new SysConfig();
 	/**
 	 * 装载配置信息
@@ -21,7 +21,7 @@ public class SysConfig extends Properties {
 	static{
 		init("/properties/initConfig.properties");
 	}
-	
+
 	/**
 	 * 初始化文件名配置信息
 	 * @param cfgFilePath
@@ -44,7 +44,7 @@ public class SysConfig extends Properties {
 	public static Properties getProp() {
 		return prop;
 	}
-	
+
 	/**
 	 * 通过key获取配置信息
 	 * @param key
@@ -53,5 +53,5 @@ public class SysConfig extends Properties {
 	public static String get(String key){
 		return prop.getProperty(key);
 	}
-	
+
 }
