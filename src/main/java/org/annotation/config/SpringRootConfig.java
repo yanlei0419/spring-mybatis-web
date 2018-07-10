@@ -37,7 +37,7 @@ public class SpringRootConfig {
 
 	public SpringRootConfig() {
 		super();
-		System.out.println("SpringConfig");
+		System.out.println("SpringRootConfig");
 	}
 	
 	@RequestMapping("/")

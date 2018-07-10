@@ -25,7 +25,7 @@ import org.springframework.web.servlet.view.JstlView;
 //@Configuration
 @EnableWebMvc
 @ComponentScan(
-		basePackages = {"com.seeker.controller","com.annotation.config"},
+		basePackages = {"org.seeker.controller","org.annotation.config"},
 		excludeFilters = { @ComponentScan.Filter(type = FilterType.ANNOTATION, value = { Controller.class })
 })
 @WebAppConfiguration()
