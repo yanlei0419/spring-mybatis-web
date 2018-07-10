@@ -36,7 +36,7 @@
 		<!-- 生成模型的包名和位置 -->
 		<javaModelGenerator targetPackage="${model_targetPackage}" targetProject="${targetProject}" >
 <!-- 	        <property name="trimStrings" value="true"/> -->
-			 <property name="rootClass" value="com.seeker.common.base.entity.Page"/>
+			 <property name="rootClass" value="org.seeker.common.base.entity.Page"/>
 		</javaModelGenerator>
 		
 		

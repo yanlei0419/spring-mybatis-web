@@ -12,12 +12,12 @@
 	</settings>
 	<!-- 类型别名是为 Java类型命名一个短的名字。 它只和 XML配置有关,只用来减少类完全 限定名的多余部分 -->
 	<typeAliases>
-		<typeAlias alias="SysLog" 							type="com.seeker.entity.SysLog" />
-		<typeAlias alias="Menu" 							type="com.seeker.entity.Menu" />
-		<typeAlias alias="Group" 							type="com.seeker.entity.Group" />
-		<typeAlias alias="GroupMenu" 						type="com.seeker.entity.GroupMenu" />
-		<typeAlias alias="User" 							type="com.seeker.entity.User" />
-		<typeAlias alias="GroupUser" 						type="com.seeker.entity.GroupUser" />
+		<typeAlias alias="SysLog" 							type="org.seeker.entity.SysLog" />
+		<typeAlias alias="Menu" 							type="org.seeker.entity.Menu" />
+		<typeAlias alias="Group" 							type="org.seeker.entity.Group" />
+		<typeAlias alias="GroupMenu" 						type="org.seeker.entity.GroupMenu" />
+		<typeAlias alias="User" 							type="org.seeker.entity.User" />
+		<typeAlias alias="GroupUser" 						type="org.seeker.entity.GroupUser" />
 	</typeAliases>
 
 <!-- 	<mappers> -->

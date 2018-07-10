@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@page import="com.seeker.common.util.MenuUtil"%>
-<%@page import="com.seeker.entity.Menu"%>
+<%@page import="org.seeker.common.util.MenuUtil"%>
+<%@page import="org.seeker.entity.Menu"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";

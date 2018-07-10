@@ -51,7 +51,7 @@
 <!-- 	简单登陆 -->
 <!-- 	<filter>   -->
 <!-- 	  <filter-name>LoginFilter</filter-name>   -->
-<!-- 	  <filter-class>com.seeker.common.filter.LoginFilter</filter-class>   -->
+<!-- 	  <filter-class>LoginFilter</filter-class>   -->
 <!-- 	</filter>   -->
 <!-- 	<filter-mapping>   -->
 <!-- 	  <filter-name>LoginFilter</filter-name>   -->

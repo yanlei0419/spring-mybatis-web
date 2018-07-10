@@ -1,4 +1,4 @@
-<%@page import="com.seeker.common.util.SysConstant"%>
+<%@page import="org.seeker.common.util.SysConstant"%>
 <%@ page language="java" import="java.util.List" pageEncoding="utf-8"%>
 <%
 	String path = request.getContextPath();

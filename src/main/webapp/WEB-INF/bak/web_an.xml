@@ -21,7 +21,7 @@
 	<!-- 制定跟配置类 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>com.annotation.config.SpringRootConfig</param-value>
+		<param-value>org.annotation.config.SpringRootConfig</param-value>
 	</context-param>
 
 	<!-- Bootstrap the root application context as usual using ContextLoaderListener -->
@@ -48,7 +48,7 @@
 			and fully-qualified @Configuration classes -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>com.annotation.config.SpringWebConfig</param-value>
+			<param-value>org.annotation.config.SpringWebConfig</param-value>
 		</init-param>
 	</servlet>
 	<!-- map all requests for /app/* to the dispatcher servlet -->
@@ -152,7 +152,7 @@
 <!-- 	<filter> -->
 <!--         <filter-name>checkLoginFilter</filter-name> -->
 <!--         <filter-class> -->
-<!--             com.seeker.common.filter.LoginFilter -->
+<!--             LoginFilter -->
 <!--         </filter-class> -->
 <!--     </filter> -->
 <!--     <filter-mapping> -->

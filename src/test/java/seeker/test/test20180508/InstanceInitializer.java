@@ -1,6 +1,6 @@
 package seeker.test.test20180508;
 
-import com.seeker.common.base.entity.Page;
+import org.seeker.common.base.entity.Page;
 
 public class InstanceInitializer extends Page {
     private int i = 1;

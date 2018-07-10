@@ -23,8 +23,8 @@
 		<!--是否覆盖文件-->
 		<property name="mergeable" value="false"/>
 
-		<commentGenerator  type="com.seeker.common.mybatis.MyCommentGenerator">
-		<commentGenerator  type="com.seeker.common.mybatis.MyCommentGenerator">
+		<commentGenerator  type="org.seeker.common.mybatis.MyCommentGenerator">
+		<commentGenerator  type="org.seeker.common.mybatis.MyCommentGenerator">
 			<property name="javaFileEncoding" value="UTF-8"/>
 			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
 			<property name="suppressAllComments" value="false" />
