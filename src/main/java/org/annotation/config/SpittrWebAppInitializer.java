@@ -3,11 +3,15 @@ package org.annotation.config;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
  * servlet 3.0   的 web.xml
+ * spring mvc 配置
  */
+//@WebFilter(servletNames = {"SimpleServlet"},filterName="SimpleFilter")
+//@WebListener("This is only a demo listener")
 public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     /**
@@ -46,6 +50,10 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/").setViewName("home");
+//    }
 
     /**
 //    借助customizeRegistration()方法中的ServletRegistration.Dynamic， 我们能

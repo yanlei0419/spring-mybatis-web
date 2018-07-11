@@ -1,0 +1,101 @@
+【1】ServletContainerInitializer是什么
+
+在web容器启动时为提供给第三方组件机会做一些初始化的工作，例如注册servlet或者filtes等，servlet规范中通过ServletContainerInitializer实现此功能。
+
+每个框架要使用ServletContainerInitializer就必须在对应的jar包的META-INF/services 目录创建一个名为javax.servlet.ServletContainerInitializer的文件，文件内容指定具体的ServletContainerInitializer实现类，那么，当web容器启动时就会运行这个初始化器做一些组件内的初始化工作。
+
+一般伴随着ServletContainerInitializer一起使用的还有HandlesTypes注解，通过HandlesTypes可以将感兴趣的一些类注入到ServletContainerInitializerde的onStartup方法作为参数传入。
+
+Tomcat容器的ServletContainerInitializer机制的实现，主要交由Context容器和ContextConfig监听器共同实现。
+
+ContextConfig监听器负责在容器启动时读取每个web应用的WEB-INF/lib目录下包含的jar包的META-INF/services/javax.servlet.ServletContainerInitializer，以及web根目录下的META-INF/services/javax.servlet.ServletContainerInitializer(即直接在src下建立的META-INF/services/javax.servlet.ServletContainerInitializer)，通过反射完成这些ServletContainerInitializer的实例化，然后再设置到Context容器中。
+
+Context容器启动时就会分别调用每个ServletContainerInitializer的onStartup方法，并将感兴趣的类作为参数传入。
+
+基本的实现机制如上图。
+
+首先通过ContextConfig监听器遍历每个jar包或web根目录的META-INF/services/javax.servlet.ServletContainerInitializer文件，根据读到的类路径实例化每个ServletContainerInitializer。
+
+然后再分别将实例化好的ServletContainerInitializer设置进Context容器中。
+
+最后Context容器启动时分别调用所有ServletContainerInitializer对象的onStartup方法。
+
+【2】@HandlesTypes注解
+
+注解源码如下：
+
+/**
+ * This annotation is used to declare an array of application classes which are
+ * passed to a {@link javax.servlet.ServletContainerInitializer}.
+ *
+ * @since Servlet 3.0
+ */
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@SuppressWarnings("rawtypes") // Spec API does not use generics
+public @interface HandlesTypes {
+
+    /**
+     * @return array of classes
+     */
+    Class[] value();
+
+}
+即， 容器启动的时候会将@HandlesTypes指定的这个类型下面的子类（实现类，子接口等）传递过来。
+
+【3】实现ServletContainerInitializer并注册三大组件
+
+如下图所示：
+
+这里写图片描述
+
+直接在src下面建立META-INF/services/javax.servlet.ServletContainerInitializer。
+
+实现类如下：
+
+//容器启动的时候会将@HandlesTypes指定的这个类型下面的子类（实现类，子接口等）传递过来；
+//传入感兴趣的类型；
+@HandlesTypes(value={HelloService.class})
+public class MyServletContainerInitializer implements ServletContainerInitializer {
+
+    /**
+     * 应用启动的时候，会运行onStartup方法；
+     *
+     * Set<Class<?>> arg0：感兴趣的类型的所有子类型；
+     * ServletContext arg1:代表当前Web应用的ServletContext；一个Web应用一个ServletContext；
+     *
+     * 1）、使用ServletContext注册Web组件（Servlet、Filter、Listener）
+     * 2）、使用编码的方式，在项目启动的时候给ServletContext里面添加组件；
+     *      必须在项目启动的时候来添加；
+     *      1）、ServletContainerInitializer得到的ServletContext；
+     *      2）、ServletContextListener得到的ServletContext；
+     */
+    @Override
+    public void onStartup(Set<Class<?>> arg0, ServletContext sc) throws ServletException {
+        // TODO Auto-generated method stub
+        System.out.println("感兴趣的类型：");
+        for (Class<?> claz : arg0) {
+            System.out.println(claz);
+        }
+
+        //注册组件  ServletRegistration
+        ServletRegistration.Dynamic servlet = sc.addServlet("userServlet", new UserServlet());
+        //配置servlet的映射信息
+        servlet.addMapping("/user");
+
+
+        //注册Listener
+        sc.addListener(UserListener.class);
+
+        //注册Filter  FilterRegistration
+        FilterRegistration.Dynamic filter = sc.addFilter("userFilter", UserFilter.class);
+        //配置Filter的映射信息
+        filter.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+
+    }
+
+}
+
+测试如下：
+
+https://blog.csdn.net/j080624/article/details/80016905

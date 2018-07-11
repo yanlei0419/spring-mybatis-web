@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.seeker.entity.*;
 import org.seeker.entity.Group;
 import org.seeker.entity.GroupUser;
 import org.seeker.entity.Menu;

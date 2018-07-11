@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.seeker</groupId>
-    <artifactId>WebDemo</artifactId>
+    <artifactId>seeker-web</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>Seeker Maven Webapp</name>
@@ -285,6 +285,8 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.2</version>
         </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
         <!-- <dependency> -->
         <!-- <groupId>org.thymeleaf</groupId> -->
@@ -391,14 +393,20 @@
             <artifactId>ognl</artifactId>
             <version>3.1.12</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>16.0.1</version>
+        </dependency>
 
     </dependencies>
-    <modules>
-        <module></module>
-    </modules>
+    <!--<modules>-->
+        <!--<module></module>-->
+    <!--</modules>-->
 
     <build>
-
+        <finalName>seeker-web</finalName>
+        <!--资源文件-->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -417,7 +425,7 @@
 
         </resources>
 
-        <finalName>Seeker</finalName>
+
         <plugins>
             <!-- 测试插件 -->
             <plugin>
@@ -428,7 +436,7 @@
                     <skipTests>false</skipTests>
                 </configuration>
             </plugin>
-
+            <!--maven  java  compiler   java  编译插件  字符集-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -483,15 +491,29 @@
                 </dependencies>
 
             </plugin>
-            <!-- <plugin> -->
-            <!-- <groupId>org.apache.maven.plugins</groupId> -->
-            <!-- <artifactId>maven-resources-plugin</artifactId> -->
-            <!-- <version>2.3</version> -->
-            <!-- <configuration> -->
-            <!-- <encoding>UTF-8</encoding> -->
-            <!-- </configuration> -->
-            <!-- </plugin> -->
-            <!-- <plugin> -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.11.v20180605</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <httpConnector>
+                        <port>8080</port>
+                    </httpConnector>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <!--<plugin>-->
             <!-- <groupId>org.apache.maven.plugins</groupId> -->
             <!-- <artifactId>maven-war-plugin</artifactId> -->
             <!-- <configuration> -->
