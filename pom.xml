@@ -171,11 +171,6 @@
         </dependency>
         <!-- pageHelper 分页插件 mybatis 3.3 以上版本 -->
         <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper -->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>3.7.4</version>
-        </dependency>
 
 
 
