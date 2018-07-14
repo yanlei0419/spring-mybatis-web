@@ -43,7 +43,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
     */  
     @Bean
     public ViewResolver viewResolver() {
-//    	logger.debug("ViewResolver");
+    	logger.debug("ViewResolver");
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setOrder(1);
         viewResolver.setViewClass(JstlView.class);
