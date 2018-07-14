@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //<context:component-scan base-package="com.seeker">  
 //<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>  
 //</context:component-scan>  
-//
-//<import resource="classpath:config/context/applicationContext-CachingConfig.xml" />  
+//<import resource="classpath:config/context/applicationContext-CachingConfig.xml" />
 //<import resource="classpath:config/context/applicationContext-DaoConfig.xml" /> 
 //@Import({DaoConfig.class,DaoConfig.class})  
 
