@@ -1,0 +1,7 @@
+jdbc:sqlite:d:\test.db
+
+
+
+
+Class_Name = "org.sqlite.JDBC";
+DB_URL = "jdbc:sqlite:F:\\xxxdatabase.db";
