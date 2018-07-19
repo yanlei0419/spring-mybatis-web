@@ -1,30 +1,11 @@
-﻿prompt PL/SQL Developer import file
-prompt Created on 2018年1月12日 by ve
-set feedback off
-set define off
-prompt Disabling triggers for SYS_GROUP...
-alter table SYS_GROUP disable all triggers;
-prompt Disabling triggers for SYS_GROUP_MENU...
-alter table SYS_GROUP_MENU disable all triggers;
-prompt Disabling triggers for SYS_GROUP_USER...
-alter table SYS_GROUP_USER disable all triggers;
-prompt Disabling triggers for SYS_MENU...
-alter table SYS_MENU disable all triggers;
-prompt Disabling triggers for SYS_USER...
-alter table SYS_USER disable all triggers;
-prompt Deleting SYS_USER...
-delete from SYS_USER;
+﻿delete from SYS_USER;
 commit;
-prompt Deleting SYS_MENU...
 delete from SYS_MENU;
 commit;
-prompt Deleting SYS_GROUP_USER...
 delete from SYS_GROUP_USER;
 commit;
-prompt Deleting SYS_GROUP_MENU...
 delete from SYS_GROUP_MENU;
 commit;
-prompt Deleting SYS_GROUP...
 delete from SYS_GROUP;
 commit;
 insert into SYS_GROUP (ID, GROUP_NAME, STATUS, REMARK)
@@ -34,8 +15,6 @@ values ('847f988d-4b98-41ad-b950-3499fa49a6d8', '普通管理员', '1', null);
 insert into SYS_GROUP (ID, GROUP_NAME, STATUS, REMARK)
 values ('cabd2d12-706f-4ef2-82bf-554222a7875a', '用户', '1', null);
 commit;
-prompt 3 records loaded
-prompt Loading SYS_GROUP_MENU...
 insert into SYS_GROUP_MENU (ID, MENUID, GROUPID)
 values ('d9b43ff3-1aa2-491a-8848-1fcfdc9d9c65', '4', '847f988d-4b98-41ad-b950-3499fa49a6d8');
 insert into SYS_GROUP_MENU (ID, MENUID, GROUPID)
@@ -179,10 +158,6 @@ values ('6dd5cc53-e1fa-4977-9f00-8880ee7d633b', '3', '6a23fe81-42ef-41a0-a72a-74
 insert into SYS_GROUP_MENU (ID, MENUID, GROUPID)
 values ('fbe91844-3d97-4b8d-a709-a30cc639f5f7', '35', '6a23fe81-42ef-41a0-a72a-7463bb669d5f');
 commit;
-prompt 71 records loaded
-prompt Loading SYS_GROUP_USER...
-prompt Table is empty
-prompt Loading SYS_MENU...
 insert into SYS_MENU (ID, NAME, PID, URL, TYPE, STATUS, SEQ, MLEVEL, ICON, CSS, REMARK, CREATE_TIME, CREATE_BY)
 values ('32', '菜单权限', '3', '/jsp/sys/menu/index.jsp', '1', '1', 3, 3, null, null, null, null, null);
 insert into SYS_MENU (ID, NAME, PID, URL, TYPE, STATUS, SEQ, MLEVEL, ICON, CSS, REMARK, CREATE_TIME, CREATE_BY)
@@ -196,19 +171,3 @@ values ('31', '操作日志', '3', '/jsp/sys/syslog/log_list.jsp', '1', '1', 4, 
 insert into SYS_MENU (ID, NAME, PID, URL, TYPE, STATUS, SEQ, MLEVEL, ICON, CSS, REMARK, CREATE_TIME, CREATE_BY)
 values ('35', '修改密码', '3', '/jsp/sys/user/updateNewPW.jsp', '1', '1', 5, 3, null, null, null, null, null);
 commit;
-prompt 6 records loaded
-prompt Loading SYS_USER...
-prompt Table is empty
-prompt Enabling triggers for SYS_GROUP...
-alter table SYS_GROUP enable all triggers;
-prompt Enabling triggers for SYS_GROUP_MENU...
-alter table SYS_GROUP_MENU enable all triggers;
-prompt Enabling triggers for SYS_GROUP_USER...
-alter table SYS_GROUP_USER enable all triggers;
-prompt Enabling triggers for SYS_MENU...
-alter table SYS_MENU enable all triggers;
-prompt Enabling triggers for SYS_USER...
-alter table SYS_USER enable all triggers;
-set feedback on
-set define on
-prompt Done.
