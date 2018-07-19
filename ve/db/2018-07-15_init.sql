@@ -1,20 +1,14 @@
 ﻿delete from SYS_USER;
-commit;
 delete from SYS_MENU;
-commit;
 delete from SYS_GROUP_USER;
-commit;
 delete from SYS_GROUP_MENU;
-commit;
 delete from SYS_GROUP;
-commit;
 insert into SYS_GROUP (ID, GROUP_NAME, STATUS, REMARK)
 values ('e65334aa-5462-4cdd-acd4-48d8eafca867', '系统管理员', '1', null);
 insert into SYS_GROUP (ID, GROUP_NAME, STATUS, REMARK)
 values ('847f988d-4b98-41ad-b950-3499fa49a6d8', '普通管理员', '1', null);
 insert into SYS_GROUP (ID, GROUP_NAME, STATUS, REMARK)
 values ('cabd2d12-706f-4ef2-82bf-554222a7875a', '用户', '1', null);
-commit;
 insert into SYS_GROUP_MENU (ID, MENUID, GROUPID)
 values ('d9b43ff3-1aa2-491a-8848-1fcfdc9d9c65', '4', '847f988d-4b98-41ad-b950-3499fa49a6d8');
 insert into SYS_GROUP_MENU (ID, MENUID, GROUPID)
@@ -157,7 +151,6 @@ insert into SYS_GROUP_MENU (ID, MENUID, GROUPID)
 values ('6dd5cc53-e1fa-4977-9f00-8880ee7d633b', '3', '6a23fe81-42ef-41a0-a72a-7463bb669d5f');
 insert into SYS_GROUP_MENU (ID, MENUID, GROUPID)
 values ('fbe91844-3d97-4b8d-a709-a30cc639f5f7', '35', '6a23fe81-42ef-41a0-a72a-7463bb669d5f');
-commit;
 insert into SYS_MENU (ID, NAME, PID, URL, TYPE, STATUS, SEQ, MLEVEL, ICON, CSS, REMARK, CREATE_TIME, CREATE_BY)
 values ('32', '菜单权限', '3', '/jsp/sys/menu/index.jsp', '1', '1', 3, 3, null, null, null, null, null);
 insert into SYS_MENU (ID, NAME, PID, URL, TYPE, STATUS, SEQ, MLEVEL, ICON, CSS, REMARK, CREATE_TIME, CREATE_BY)
@@ -170,4 +163,3 @@ insert into SYS_MENU (ID, NAME, PID, URL, TYPE, STATUS, SEQ, MLEVEL, ICON, CSS, 
 values ('31', '操作日志', '3', '/jsp/sys/syslog/log_list.jsp', '1', '1', 4, 3, null, null, null, null, null);
 insert into SYS_MENU (ID, NAME, PID, URL, TYPE, STATUS, SEQ, MLEVEL, ICON, CSS, REMARK, CREATE_TIME, CREATE_BY)
 values ('35', '修改密码', '3', '/jsp/sys/user/updateNewPW.jsp', '1', '1', 5, 3, null, null, null, null, null);
-commit;

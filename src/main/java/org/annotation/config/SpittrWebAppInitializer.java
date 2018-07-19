@@ -1,9 +1,10 @@
 package org.annotation.config;
 
+import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -23,11 +24,11 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
     }
 
     @Override
-	public void onStartup(ServletContext servletContext) throws ServletException {//加载servlet
-//			sc.addFilter(filterName, filterClass)
-//			sc.addListener(listenerClass);
+	public void onStartup(ServletContext sc) throws ServletException {//加载servlet
+
+//			sc.addListener(SpringEncodingFilter);
 //			sc.addServlet(servletName, servletClass)
-    	super.onStartup(servletContext);
+    	super.onStartup(sc);
 	}
 
 	/**
@@ -49,6 +50,16 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        CharacterEncodingFilter SpringEncodingFilter=new CharacterEncodingFilter();
+        SpringEncodingFilter.setEncoding("UTF-8");
+        SpringEncodingFilter.setForceEncoding(true);
+
+
+        return new Filter[]{SpringEncodingFilter};
     }
 //    @Override
 //    public void addViewControllers(ViewControllerRegistry registry) {

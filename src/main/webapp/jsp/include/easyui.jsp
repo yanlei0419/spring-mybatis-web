@@ -10,7 +10,7 @@
 			var bodyWidth = document.body.clientWidth;
 			return (bodyWidth - 90) * percent;
 		}
-		var pageList = ["20","50", "100", "200","300", "500" ];
+		var pageList = [1,"20","50", "100", "200","300", "500" ];
 		var pageSize=20;
 		var width=$(window).width();
 		var height=$(window).height()-115;

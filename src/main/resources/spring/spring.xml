@@ -52,14 +52,14 @@
 <!-- 		</property> -->
 <!-- 	</bean> -->
 	
-	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">  
-		<!--慢SQL统计，如果SQL执行时间超过一定时间则记录为慢SQL  -->
-	    <property name="slowSqlMillis" value="10000" />  
-	    <!--慢SQL统计日志输出  -->
-	    <property name="logSlowSql" value="false" />  
-	     <!--合并SQL统计 例如select * from table t where t.id =1，会被变为select * from table t where t.id =？来统计  -->	
-	    <property name="mergeSql" value="true" />
-	</bean>  
+	<!--<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">  -->
+		<!--&lt;!&ndash;慢SQL统计，如果SQL执行时间超过一定时间则记录为慢SQL  &ndash;&gt;-->
+	    <!--<property name="slowSqlMillis" value="10000" />  -->
+	    <!--&lt;!&ndash;慢SQL统计日志输出  &ndash;&gt;-->
+	    <!--<property name="logSlowSql" value="false" />  -->
+	     <!--&lt;!&ndash;合并SQL统计 例如select * from table t where t.id =1，会被变为select * from table t where t.id =？来统计  &ndash;&gt;	-->
+	    <!--<property name="mergeSql" value="true" />-->
+	<!--</bean>  -->
 	<bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">  
 	    <property name="statementExecutableSqlLogEnable" value="true" />  
 	    <property name="resultSetLogEnabled" value="false" />  
@@ -107,7 +107,7 @@
 		 <!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->  
 		    <property name="proxyFilters">  
 		        <list>  
-		            <ref bean="stat-filter" />  
+		            <!--<ref bean="stat-filter" />  -->
 		            <ref bean="log-filter" />  
 <!-- 		            <ref bean="wall-filter" />   -->
 		        </list>  
