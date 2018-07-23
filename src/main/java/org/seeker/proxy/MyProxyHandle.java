@@ -39,16 +39,15 @@ public class MyProxyHandle implements InvocationHandler {
 //        s.say();
 
 
-//        DemoImpl i=new DemoImpl();
 //        MyProxyHandle proxy=new MyProxyHandle();
 //        Demo s = (Demo) Proxy.newProxyInstance(Demo.class.getClassLoader(), new Class[]{Demo.class}, proxy);
 //        s.say();
 
 
-        MyProxyHandle proxy=new MyProxyHandle();
-        Demo s = (Demo) Proxy.newProxyInstance(DemoImpl.class.getClassLoader(), DemoImpl.class.getInterfaces(), proxy);
-        s.say();
-        s.abc();
+//        MyProxyHandle proxy=new MyProxyHandle();
+//        Demo s = (Demo) Proxy.newProxyInstance(DemoImpl.class.getClassLoader(), DemoImpl.class.getInterfaces(), proxy);
+//        s.say();
+//        s.abc();
 
     }
 
