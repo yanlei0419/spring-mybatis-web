@@ -419,6 +419,34 @@
         </resources>
 
         <plugins>
+            <!--更新配置文件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <!--复制文件到todir目录 overwrite 是否覆盖-->
+                                <copy todir="target" overwrite="true">
+                                    <!--复制文件操作源文件-->
+                                    <fileSet dir="src/main/resources/ve/${env}" >
+                                        <include name="jdbc.properties"/>
+                                    </fileSet>
+                                </copy>
+                                <!--替换file 文件中   变量名为token  字符串   编译 不起作用 -->
+                                <replace file="target/assembly/assembly.xml" token="@project.name@" value="${project.artifactId}" />
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- 测试插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -495,7 +523,8 @@
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
-                </configuration>            </plugin>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
