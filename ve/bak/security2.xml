@@ -86,7 +86,7 @@
 	</sec:http>
 
 	<!-- 登录验证器 -->
-	<!-- <bean id="loginFilter" class="com.zx.datastandard.common.sercurity.VeUsernamePasswordAuthenticationFilter"> -->
+	<!-- <bean id="loginFilter" class="com.zx.datastandard.mapper.sercurity.VeUsernamePasswordAuthenticationFilter"> -->
 	<!-- <!-- 处理登录 -->
 	-->
 	<!-- <property name="filterProcessesUrl" value="/spring_security_check"></property> -->
@@ -109,13 +109,13 @@
 
 
 	<!-- 项目实现的用户查询服务,将用户信息查询出来 -->
-	<!-- <bean id="dhccUserDetailService" class="com.dhcc.common.security.support.DhccUserDetailService" /> -->
+	<!-- <bean id="dhccUserDetailService" class="com.dhcc.mapper.security.support.DhccUserDetailService" /> -->
 	<!-- org.springframework.security.providers.ProviderManager -->
 
 
 
 	<!-- 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源 -->
-	<!-- <bean id="dhccAccessDecisionManager" class="com.dhcc.common.security.support.DhccAccessDecisionManager" /> -->
+	<!-- <bean id="dhccAccessDecisionManager" class="com.dhcc.mapper.security.support.DhccAccessDecisionManager" /> -->
 
 	<!-- 资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色访问 -->
 	<!-- <bean id="userService" class="com.zx.datastandard.service.impl.UserServiceImpl" /> -->
@@ -130,7 +130,7 @@
 	</sec:authentication-manager>
 
 	<!-- 配置过滤器: 一个自定义的filter，必须包含authenticationManager,accessDecisionManager,securityMetadataSource三个属性， 我们的所有控制将在这三个类中实现，解释详见具体配置 -->
-	<!-- <bean id="dhccFilter" class="com.dhcc.common.security.DhccSecurityFilter"> -->
+	<!-- <bean id="dhccFilter" class="com.dhcc.mapper.security.DhccSecurityFilter"> -->
 	<!-- 登陆的认证，用户拥有的权限 -->
 	<!-- <property name="authenticationManager" ref="dhccAuthenticationManager" /> -->
 	<!-- 资源访问决策，用户是否拥有所请求资源的权限 -->

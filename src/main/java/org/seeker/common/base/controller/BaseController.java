@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 
-public class BaseController {
+public abstract class BaseController {
     private static final String INTERNAL_BILLS_EXCEL_FILE = "" ;
     private Logger l=LoggerFactory.getLogger(BaseController.class);
 	private String operateModuleName;//模块名称

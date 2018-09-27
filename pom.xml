@@ -21,39 +21,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <profiles>
-        <profile>
-            <!-- 本地开发环境 -->
-            <id>dev</id>
-            <properties>
-                <profiles.active>dev</profiles.active>
-                <!-- <profiles.active>dev/properties</profiles.active> -->
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <!-- 测试环境 -->
-            <id>test</id>
-            <properties>
-                <profiles.active>test</profiles.active>
-            </properties>
-            <activation>
-                <!-- <activeByDefault>true</activeByDefault> -->
-            </activation>
-        </profile>
-        <profile>
-            <!-- 生产环境 -->
-            <id>pro</id>
-            <properties>
-                <profiles.active>pro</profiles.active>
-            </properties>
-            <activation>
-                <!-- <activeByDefault>true</activeByDefault> -->
-            </activation>
-        </profile>
-    </profiles>
 
 
     <dependencies>
@@ -311,7 +278,7 @@
 
         <!-- <dependency> -->
         <!-- <groupId>org.apache.lucene</groupId> -->
-        <!-- <artifactId>lucene-analyzers-common</artifactId> -->
+        <!-- <artifactId>lucene-analyzers-mapper</artifactId> -->
         <!-- <version>6.0.0</version> -->
         <!-- </dependency> -->
 
@@ -403,9 +370,25 @@
         </dependency>
 
     </dependencies>
-    <!--<modules>-->
-        <!--<module></module>-->
-    <!--</modules>-->
+    <profiles>
+        <profile>
+            <id>sqlite</id>
+            <properties>
+                <!--EL表达式变量   ${env}-->
+                <env>sqlite</env>
+                <profiles.active>sqlite</profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>ora</id>
+            <properties>
+                <env>ora</env>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <finalName>spring-mybatis-web</finalName>
@@ -415,19 +398,25 @@
                 <directory>src/main/resources</directory>
                 <!-- 资源根目录排除各环境的配置，防止在生成目录中多余其它目录 -->
                 <excludes>
-                    <exclude>test/**</exclude>
-                    <exclude>pro/**</exclude>
-                    <exclude>dev/**</exclude>
+                    <exclude>ve/**</exclude>
                 </excludes>
             </resource>
             <resource>
-                <directory>src/main/resources</directory>
-                <!--<directory>src/main/resources/${profiles.active}</directory>-->
-                <!--<targetPath>C:\Users\ve\Desktop\</targetPath>-->
+                <directory>src/main/resources/ve/${env}</directory>
+                <includes>
+                    <include>jdbc.properties</include>
+                </includes>
+                <targetPath>.</targetPath>
             </resource>
-
+            <resource>
+                <directory>src/main/resources/ve/${env}/mapper</directory>
+                <includes>
+                    <include>**/**.xml</include>
+                </includes>
+                <!--上面文件输出的位置-->
+                <targetPath>mybatis/mapper/</targetPath>
+            </resource>
         </resources>
-
 
         <plugins>
             <!-- 测试插件 -->
@@ -506,8 +495,7 @@
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
-                </configuration>
-            </plugin>
+                </configuration>            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

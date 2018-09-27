@@ -1098,7 +1098,7 @@ plupload.Uploader = function(options) {
 	function initControls(settings, cb) {
 		var self = this, inited = 0, queue = [];
 
-		// common settings
+		// mapper settings
 		var options = {
 			runtime_order: settings.runtimes,
 			required_caps: settings.required_features,
