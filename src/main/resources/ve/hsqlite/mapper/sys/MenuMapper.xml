@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seeker.mapper.MenuMapper">
+	<resultMap id="Menu" type="Menu">
+		<id column="ID" jdbcType="VARCHAR" property="id" />
+		<result column="NAME" jdbcType="VARCHAR" property="name" />
+		<result column="PID" jdbcType="VARCHAR" property="pid" />
+		<result column="URL" jdbcType="VARCHAR" property="url" />
+		<result column="TYPE" jdbcType="CHAR" property="type" />
+		<result column="STATUS" jdbcType="CHAR" property="status" />
+		<result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+		<result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
+		<result column="SEQ" jdbcType="DECIMAL" property="seq" />
+		<result column="MLEVEL" jdbcType="DECIMAL" property="mlevel" />
+		<result column="icon" jdbcType="VARCHAR" property="icon" />
+		<result column="groupId" jdbcType="VARCHAR" property="groupId" />
+	</resultMap>
+	<sql id="TABLE_NAME">sys_menu</sql>
+	<sql id="Base_Column_List">
+		t.ID, t.NAME, t.PID, t.URL, t.TYPE, t.STATUS, t.CREATE_TIME, t.CREATE_BY, t.REMARK, t.SEQ, t.MLEVEL,t.icon
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="Menu" flushCache="false" useCache="true" >
+		select
+		<include refid="Base_Column_List" />
+		from SYS_MENU
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" flushCache="true">
+		delete from SYS_MENU
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="Menu" flushCache="true">
+		insert into SYS_MENU (ID, NAME, PID,
+		URL, TYPE, STATUS, CREATE_TIME,
+		CREATE_BY, REMARK, SEQ,
+		MLEVEL,icon)
+		values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR},
+		#{url,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{createTime,jdbcType=VARCHAR},
+		#{createBy,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{seq,jdbcType=DECIMAL},
+		#{mlevel,jdbcType=DECIMAL},#{icon})
+	</insert>
+	<insert id="insertSelective" parameterType="Menu" flushCache="true">
+		insert into SYS_MENU
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="pid != null">
+				PID,
+			</if>
+			<if test="url != null">
+				URL,
+			</if>
+			<if test="type != null">
+				TYPE,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="createBy != null">
+				CREATE_BY,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="seq != null">
+				SEQ,
+			</if>
+			<if test="mlevel != null">
+				MLEVEL,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				#{pid,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="seq != null">
+				#{seq,jdbcType=DECIMAL},
+			</if>
+			<if test="mlevel != null">
+				#{mlevel,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="Menu" flushCache="true">
+		update SYS_MENU
+		<set>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				PID = #{pid,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE = #{type,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="seq != null">
+				SEQ = #{seq,jdbcType=DECIMAL},
+			</if>
+			<if test="mlevel != null">
+				MLEVEL = #{mlevel,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="Menu" flushCache="true">
+		update SYS_MENU
+		set NAME = #{name,jdbcType=VARCHAR},
+		PID = #{pid,jdbcType=VARCHAR},
+		URL = #{url,jdbcType=VARCHAR},
+		TYPE = #{type,jdbcType=CHAR},
+		STATUS = #{status,jdbcType=CHAR},
+		CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+		CREATE_BY = #{createBy,jdbcType=VARCHAR},
+		REMARK = #{remark,jdbcType=VARCHAR},
+		SEQ = #{seq,jdbcType=DECIMAL},
+		MLEVEL = #{mlevel,jdbcType=DECIMAL}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+
+	<select id="getList" parameterType="Menu" resultMap="Menu"  flushCache="false" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from
+		<include refid="TABLE_NAME" />
+		t
+		<where>
+			1=1
+			<if test="type != null and type != ''"> and type = #{type}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="pid != null and pid != ''"> and pid = #{pid}</if>
+			<if test="mlevel != null and mlevel != ''"> and mlevel = #{mlevel}</if>
+		</where>
+		order by seq asc
+	</select>
+	<!-- 做权限菜单使用的查询语句 -->
+	<select id="getPrivsMenuListByGroupId" parameterType="Menu" resultMap="Menu"  flushCache="false" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		,groupId
+		from
+		<include refid="TABLE_NAME" />
+		t
+		left join SYS_GROUP_MENU t1 on t.id=t1.menuid
+		<if test="groupId != null and groupId != ''"> and t1.groupId = #{groupId}</if>
+		<where>
+			1=1
+			<if test="type != null and type != ''"> and type = #{type}</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="pid != null and pid != ''"> and pid = #{pid}</if>
+			<if test="mlevel != null and mlevel != ''"> and mlevel = #{mlevel}</if>
+		</where>
+		order by seq asc
+	</select>
+
+
+
+	<!-- 用户权限菜单使用的查询语句 -->
+	<select id="getGroupMenuList" parameterType="Menu" resultMap="Menu"  flushCache="false" useCache="true">
+		select
+		<include refid="Base_Column_List" />
+		from
+		SYS_GROUP_MENU t1
+		left join
+		<include refid="TABLE_NAME" />
+		t on t.id=t1.menuid
+		<where>
+			1=1
+			<if test="groupId != null and groupId != ''"> and t1.groupId in (${groupId})</if>
+			<if test="status != null and status != ''"> and status = #{status}</if>
+			<if test="pid != null and pid != ''"> and pid = #{pid}</if>
+			<if test="mlevel != null and mlevel != ''"> and mlevel = #{mlevel}</if>
+		</where>
+		group by
+		<include refid="Base_Column_List" />
+		order by seq asc
+	</select>
+
+</mapper>

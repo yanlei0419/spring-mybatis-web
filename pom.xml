@@ -383,6 +383,12 @@
             </activation>
         </profile>
         <profile>
+            <id>hsqlite</id>
+            <properties>
+                <env>hsqlite</env>
+            </properties>
+        </profile>
+        <profile>
             <id>ora</id>
             <properties>
                 <env>ora</env>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seeker.mapper.SysLogMapper">
+
+	<!-- 用户信息表 -->
+	<sql id="TABLE_NAME">sys_log</sql>
+	<resultMap id="SysLog" type="SysLog">
+		<id column="ID" jdbcType="VARCHAR" property="id" />
+		<result column="OPERATE_MODULE" jdbcType="VARCHAR" property="operateModule" />
+		<result column="OPERATE_CONTENT" jdbcType="VARCHAR" property="operateContent" />
+		<result column="OPERATE_TYPE" jdbcType="CHAR" property="operateType" />
+		<result column="OPERATE_BY" jdbcType="VARCHAR" property="operateBy" />
+		<result column="OPERATE_TIME" jdbcType="VARCHAR" property="operateTime" />
+		<result column="OPERATE_IP" jdbcType="VARCHAR" property="operateIp" />
+		<result column="OPERATE_REMARK" jdbcType="VARCHAR" property="operateRemark" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, OPERATE_MODULE, OPERATE_CONTENT, OPERATE_TYPE, OPERATE_BY, OPERATE_TIME, OPERATE_IP,
+		OPERATE_REMARK
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="SysLog">
+		select
+		<include refid="Base_Column_List" />
+		from SYS_LOG
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from SYS_LOG
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="SysLog">
+		insert into SYS_LOG (ID, OPERATE_MODULE, OPERATE_CONTENT,
+		OPERATE_TYPE, OPERATE_BY, OPERATE_TIME,
+		OPERATE_IP, OPERATE_REMARK)
+		values (#{id,jdbcType=VARCHAR}, #{operateModule,jdbcType=VARCHAR}, #{operateContent,jdbcType=VARCHAR},
+		#{operateType,jdbcType=CHAR}, #{operateBy,jdbcType=VARCHAR}, #{operateTime,jdbcType=VARCHAR},
+		#{operateIp,jdbcType=VARCHAR}, #{operateRemark,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="save" parameterType="SysLog">
+		insert into SYS_LOG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="operateModule != null">
+				OPERATE_MODULE,
+			</if>
+			<if test="operateContent != null">
+				OPERATE_CONTENT,
+			</if>
+			<if test="operateType != null">
+				OPERATE_TYPE,
+			</if>
+			<if test="operateBy != null">
+				OPERATE_BY,
+			</if>
+			<if test="operateTime != null">
+				OPERATE_TIME,
+			</if>
+			<if test="operateIp != null">
+				OPERATE_IP,
+			</if>
+			<if test="operateRemark != null">
+				OPERATE_REMARK,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="operateModule != null">
+				#{operateModule,jdbcType=VARCHAR},
+			</if>
+			<if test="operateContent != null">
+				#{operateContent,jdbcType=VARCHAR},
+			</if>
+			<if test="operateType != null">
+				#{operateType,jdbcType=CHAR},
+			</if>
+			<if test="operateBy != null">
+				#{operateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="operateTime != null">
+				#{operateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="operateIp != null">
+				#{operateIp,jdbcType=VARCHAR},
+			</if>
+			<if test="operateRemark != null">
+				#{operateRemark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateByPrimaryKeySelective" parameterType="SysLog">
+		update SYS_LOG
+		<set>
+			<if test="operateModule != null">
+				OPERATE_MODULE = #{operateModule,jdbcType=VARCHAR},
+			</if>
+			<if test="operateContent != null">
+				OPERATE_CONTENT = #{operateContent,jdbcType=VARCHAR},
+			</if>
+			<if test="operateType != null">
+				OPERATE_TYPE = #{operateType,jdbcType=CHAR},
+			</if>
+			<if test="operateBy != null">
+				OPERATE_BY = #{operateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="operateTime != null">
+				OPERATE_TIME = #{operateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="operateIp != null">
+				OPERATE_IP = #{operateIp,jdbcType=VARCHAR},
+			</if>
+			<if test="operateRemark != null">
+				OPERATE_REMARK = #{operateRemark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="SysLog">
+		update SYS_LOG
+		set OPERATE_MODULE = #{operateModule,jdbcType=VARCHAR},
+		OPERATE_CONTENT = #{operateContent,jdbcType=VARCHAR},
+		OPERATE_TYPE = #{operateType,jdbcType=CHAR},
+		OPERATE_BY = #{operateBy,jdbcType=VARCHAR},
+		OPERATE_TIME = #{operateTime,jdbcType=VARCHAR},
+		OPERATE_IP = #{operateIp,jdbcType=VARCHAR},
+		OPERATE_REMARK = #{operateRemark,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<sql id="condition_sql">
+		1=1
+		<if test="startTime != null and startTime != ''"> and to_date(t2.operate_time,'yyyy-mm-dd hh24:mi:ss')&gt;=to_date('${startTime} 00:00:00','yyyy-mm-dd hh24:mi:ss')</if>
+		<if test="endTime != null and endTime != ''"> and to_date(t2.operate_time,'yyyy-mm-dd hh24:mi:ss')&lt;=to_date('${endTime} 23:59:59','yyyy-mm-dd hh24:mi:ss')</if>
+	</sql>
+
+	<select id="getList" parameterType="SysLog" resultMap="SysLog">
+		select
+		<include refid="Base_Column_List" />
+		from
+		<include refid="TABLE_NAME" />
+		t2
+		<where>
+			<include refid="condition_sql" />
+		</where>
+	</select>
+
+	<select id="getCount" parameterType="SysLog" resultType="int">
+		select
+		count(1)
+		from
+		<include refid="TABLE_NAME" />
+		t2
+		<where>
+			<include refid="condition_sql" />
+		</where>
+	</select>
+</mapper>
