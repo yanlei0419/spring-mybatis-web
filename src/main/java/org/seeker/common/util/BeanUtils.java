@@ -16,20 +16,20 @@ public class BeanUtils {
 	 * @return
 	 */
 	public static Object depthClone(Object obj) {
-		Object cloneObj = null;
 		try {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			ObjectOutputStream oo = new ObjectOutputStream(out);
 			oo.writeObject(obj);
 			ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
 			ObjectInputStream oi = new ObjectInputStream(in);
-			cloneObj = oi.readObject();
+			return  oi.readObject();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return null;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			return null;
 		}
-		return cloneObj;
 	}
 
 
